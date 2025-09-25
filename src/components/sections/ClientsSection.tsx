@@ -21,7 +21,7 @@ export default function ClientsSection() {
           </div>
           <div className="bg-white/80 p-6 rounded-lg text-left">
             <h3 className="font-bold text-clients mb-3">Testimonials</h3>
-            <p className="text-sm">"Exceptional quality and service. Highly recommended!" - Local Client</p>
+            <p className="text-sm">&ldquo;Exceptional quality and service. Highly recommended!&rdquo; - Local Client</p>
           </div>
         </div>
       </div>
