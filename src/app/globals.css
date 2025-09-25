@@ -1,5 +1,33 @@
 @import "tailwindcss";
 
+@font-face {
+  font-family: 'TimesNRCyrMT';
+  src: url('/timesnrcyrmt_inclined.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'TimesNRCyrMT';
+  src: url('/timesnrcyrmt_boldinclined.ttf') format('truetype');
+  font-weight: bold;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'TimesNRCyrMT';
+  src: url('/timesnrcyrmt_bold.ttf') format('truetype');
+  font-weight: 800;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Helvetica-Bold-Condensed';
+  src: url('/Helvetica Bold Condensed.otf') format('opentype');
+  font-weight: bold;
+  font-style: normal;
+}
+
 :root {
   --background: #ffffff;
   --foreground: #171717;
@@ -10,6 +38,22 @@
   --color-foreground: var(--foreground);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
+  
+  /* Arthouse Brand Colors */
+  --color-printing: #4A90E2;
+  --color-shop: #E24A90;
+  --color-repairs: #F7C52D;
+  --color-contact: #2D3E50;
+  --color-about: #E74C3C;
+  --color-clients: #27AE60;
+  
+  /* Gradient Colors for Navigation */
+  --color-nav-gradient-start: #4A90E2;
+  --color-nav-gradient-end: #27AE60;
+  
+  /* Theme Toggle Colors */
+  --color-theme-light: #FFFFFF;
+  --color-theme-dark: #000000;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -23,4 +67,11 @@ body {
   background: var(--background);
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
+}
+
+/* Hide Next.js dev tools indicator */
+#__next-dev-client-indicator,
+[data-nextjs-toast],
+#devtools-indicator {
+  display: none !important;
 }
