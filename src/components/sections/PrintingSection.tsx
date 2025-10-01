@@ -5,6 +5,7 @@ export default function PrintingSection() {
   const [images, setImages] = useState<string[]>([]);
   const [scrollPosition, setScrollPosition] = useState(0);
   const [isUserScrolling, setIsUserScrolling] = useState(false);
+  const [isFormSubmitted, setIsFormSubmitted] = useState(false);
   const animationRef = useRef<number | null>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const userScrollTimeoutRef = useRef<NodeJS.Timeout | null>(null);
@@ -109,6 +110,12 @@ export default function PrintingSection() {
     }
   };
 
+  // Handle form submission
+  const handleFormSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsFormSubmitted(true);
+  };
+
   return (
     <div className="h-full flex flex-col">
       {/* Image Carousel - Fixed height, no scroll */}
@@ -145,11 +152,17 @@ export default function PrintingSection() {
       {/* Form Section - Scrollable */}
       <div className="flex-1 overflow-y-auto">
         <div className="max-w-md mx-auto px-8 pr-20 py-8">
-        <h2 className="text-2xl font-bold text-gray-600 mb-6 uppercase tracking-wide text-center" style={{ fontFamily: 'Helvetica-Bold-Condensed, Arial, sans-serif' }}>Submit for a Quote</h2>
+        <h2 className="text-xl font-bold text-gray-500 mb-6 uppercase tracking-wide text-center" style={{ fontFamily: 'Helvetica-Bold-Condensed, Arial, sans-serif' }}>Submit for a Print Quote</h2>
         
-        <form className="space-y-4">
+        {isFormSubmitted ? (
+          <div className="flex flex-col items-center justify-center py-16">
+            <h3 className="text-lg font-bold text-gray-400 mb-0 italic" style={{ fontFamily: 'serif' }}>Thanks!</h3>
+            <p className="text-lg font-bold text-gray-400 italic" style={{ fontFamily: 'serif' }}>You'll hear from us soon.</p>
+          </div>
+        ) : (
+        <form className="space-y-4" onSubmit={handleFormSubmit}>
           <div>
-            <label className="block text-gray-600 font-medium mb-1 text-sm" style={{ fontFamily: 'Helvetica-Bold-Condensed, Arial, sans-serif' }}>EMAIL:</label>
+            <label className="block text-gray-600 font-medium mb-1 text-sm" style={{ fontFamily: 'Helvetica-Bold-Condensed, Arial, sans-serif' }}>EMAIL/PHONE NUMBER:</label>
             <input 
               type="email" 
               className="w-full h-8 border border-gray-400 bg-white px-2 text-black"
@@ -168,6 +181,16 @@ export default function PrintingSection() {
                 <path fillRule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clipRule="evenodd" />
               </svg>
             </div>
+          </div>
+          
+          <div className="flex justify-center my-4">
+            <button 
+              type="button"
+              className="px-4 py-1 border-1 border-dashed border-gray-400 bg-white text-gray-600 hover:border-gray-500 hover:text-gray-700 transition-colors"
+              style={{ fontFamily: 'Helvetica-Bold-Condensed, Arial, sans-serif' }}
+            >
+              UPLOAD
+            </button>
           </div>
           
           <div>
@@ -217,14 +240,52 @@ export default function PrintingSection() {
           
           <div>
             <label className="block text-gray-600 font-medium mb-1 text-sm" style={{ fontFamily: 'Helvetica-Bold-Condensed, Arial, sans-serif' }}>
-              HOW MANY COLORS IS YOUR DESIGN? <span className="text-xs text-gray-500">MAXIMUM 4</span>
+              HOW MANY COLORS IS YOUR DESIGN? 
             </label>
             <input 
               type="text" 
               className="w-full h-8 border border-gray-400 bg-white px-2 text-black"
             />
           </div>
+          
+          <div>
+            <label className="block text-gray-600 font-medium mb-1 text-sm" style={{ fontFamily: 'Helvetica-Bold-Condensed, Arial, sans-serif' }}>WHERE DO YOU WANT THE DESIGN PRINTED?</label>
+            <input 
+              type="text" 
+              className="w-full h-8 border border-gray-400 bg-white px-2 text-black"
+            />
+          </div>
+          
+          <div>
+            <label className="block text-gray-600 font-medium mb-1 text-sm" style={{ fontFamily: 'Helvetica-Bold-Condensed, Arial, sans-serif' }}>TURNAROUND TIME:</label>
+            <div className="relative">
+              <select className="w-full h-8 border border-gray-400 bg-white pl-2 pr-8 appearance-none text-black">
+                <option></option>
+              </select>
+              <svg className="absolute right-2 top-1/2 transform -translate-y-1/2 w-3 h-3 text-gray-400 pointer-events-none" fill="currentColor" viewBox="0 0 20 20">
+                <path fillRule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clipRule="evenodd" />
+              </svg>
+            </div>
+          </div>
+          
+          <div>
+            <label className="block text-gray-600 font-medium mb-1 text-sm" style={{ fontFamily: 'Helvetica-Bold-Condensed, Arial, sans-serif' }}>ANY ADDITIONAL INFO:</label>
+            <textarea 
+              className="w-full h-16 border border-gray-400 bg-white px-2 py-1 resize-none text-black"
+            />
+          </div>
+          
+          <div className="flex justify-center mt-6">
+            <button 
+              type="submit"
+              className="px-4 py-1 border-1 border-dashed border-gray-400 bg-white text-gray-600 hover:border-gray-500 hover:text-gray-700 transition-colors"
+              style={{ fontFamily: 'Helvetica-Bold-Condensed, Arial, sans-serif' }}
+            >
+              SUBMIT
+            </button>
+          </div>
         </form>
+        )}
         </div>
       </div>
     </div>

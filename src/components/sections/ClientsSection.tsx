@@ -1,28 +1,21 @@
 export default function ClientsSection() {
   return (
-    <div className="h-full flex flex-col items-center justify-center p-8 bg-clients/10">
-      <div className="text-center max-w-2xl">
-        <h2 className="text-5xl font-bold text-clients mb-6">CLIENTS</h2>
-        <p className="text-xl text-foreground/80 mb-8">
-          Discover our portfolio and satisfied customer testimonials.
-        </p>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <div className="bg-white/80 p-6 rounded-lg text-left">
-            <h3 className="font-bold text-clients mb-3">Local Businesses</h3>
-            <p className="text-sm">Helping local companies build their brand with custom apparel</p>
+    <div className="h-full flex flex-col items-start justify-start pt-24 pl-8">
+      <div className="text-left max-w-2xl">
+        <div className="text-base italic text-gray-600 leading-relaxed" style={{ fontFamily: 'serif' }}>
+          <div className="mb-6">
+            <p>MoMa</p>
+            <p>DEPOP</p>
+            <p>UNION SQUARE HOSPITALITY GROUP</p>
+            <p>LESBIAN BAR PROJECT</p>
+            <p>GRAMERCY TAVERN</p>
+            <p>THE MODERN</p>
+            <p>BROOKLYN COMEDY COLLECTIVE</p>
+            <p>TEARS OF DREAMS</p>
+            <p>UNION SQUARE CAFE</p>
+            <p>UPRIGHT CITIZENS BRIGADE</p>
           </div>
-          <div className="bg-white/80 p-6 rounded-lg text-left">
-            <h3 className="font-bold text-clients mb-3">Events & Teams</h3>
-            <p className="text-sm">Custom merchandise for sports teams, events, and organizations</p>
-          </div>
-          <div className="bg-white/80 p-6 rounded-lg text-left">
-            <h3 className="font-bold text-clients mb-3">Artists & Designers</h3>
-            <p className="text-sm">Bringing creative visions to life through screen printing</p>
-          </div>
-          <div className="bg-white/80 p-6 rounded-lg text-left">
-            <h3 className="font-bold text-clients mb-3">Testimonials</h3>
-            <p className="text-sm">&ldquo;Exceptional quality and service. Highly recommended!&rdquo; - Local Client</p>
-          </div>
+          <p className="text-sm">Full portfolio available upon request.</p>
         </div>
       </div>
     </div>

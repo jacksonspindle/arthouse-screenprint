@@ -1,29 +1,70 @@
+import { useState } from 'react';
+import Image from 'next/image';
+
 export default function ContactSection() {
+  const [isFormSubmitted, setIsFormSubmitted] = useState(false);
+
+  // Handle form submission
+  const handleFormSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsFormSubmitted(true);
+  };
+
   return (
-    <div className="h-full flex flex-col items-center justify-center p-8 bg-contact/10">
-      <div className="text-center max-w-2xl">
-        <h2 className="text-5xl font-bold text-contact mb-6">CONTACT</h2>
-        <p className="text-xl text-foreground/80 mb-8">
-          Get in touch with our team for your screen printing needs.
-        </p>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <div className="bg-white/80 p-6 rounded-lg text-left">
-            <h3 className="font-bold text-contact mb-3">Phone</h3>
-            <p className="text-sm">(555) 123-4567</p>
+    <div className="h-full flex flex-col">
+      {/* Form Section - Scrollable */}
+      <div className="flex-1 overflow-y-auto">
+        {isFormSubmitted ? (
+          <div className="flex flex-col items-center justify-center h-full">
+            <h3 className="text-lg font-bold text-gray-400 mb-0 italic" style={{ fontFamily: 'serif' }}>Thanks!</h3>
+            <p className="text-lg font-bold text-gray-400 italic" style={{ fontFamily: 'serif' }}>You'll hear from us soon.</p>
           </div>
-          <div className="bg-white/80 p-6 rounded-lg text-left">
-            <h3 className="font-bold text-contact mb-3">Email</h3>
-            <p className="text-sm">hello@arthouse-print.com</p>
+        ) : (
+          <div className="max-w-md mx-auto px-8 pr-20 py-8">
+            <h2 className="text-xl font-bold text-gray-500 mb-6 uppercase tracking-wide text-center mt-16" style={{ fontFamily: 'Helvetica-Bold-Condensed, Arial, sans-serif' }}>Contact</h2>
+            
+            <form className="space-y-4" onSubmit={handleFormSubmit}>
+              <div>
+                <label className="block text-gray-600 font-medium mb-1 text-sm" style={{ fontFamily: 'Helvetica-Bold-Condensed, Arial, sans-serif' }}>NAME:</label>
+                <input 
+                  type="text" 
+                  className="w-full h-8 border border-gray-400 bg-white px-2 text-black"
+                />
+              </div>
+              
+              <div>
+                <label className="block text-gray-600 font-medium mb-1 text-sm" style={{ fontFamily: 'Helvetica-Bold-Condensed, Arial, sans-serif' }}>MESSAGE:</label>
+                <textarea 
+                  className="w-full h-24 border border-gray-400 bg-white px-2 py-1 resize-none text-black"
+                />
+              </div>
+              
+              <div className="flex justify-center mt-6">
+                <button 
+                  type="submit"
+                  className="px-4 py-1 border-1 border-dashed border-gray-400 bg-white text-gray-600 hover:border-gray-500 hover:text-gray-700 transition-colors"
+                  style={{ fontFamily: 'Helvetica-Bold-Condensed, Arial, sans-serif' }}
+                >
+                  SUBMIT
+                </button>
+              </div>
+              
+              <div className="flex justify-center mt-4">
+                <p className="text-lg font-bold text-gray-400 italic" style={{ fontFamily: 'serif' }}>arthousescreens@gmail.com</p>
+              </div>
+              
+              <div className="flex justify-center mt-1">
+                <Image
+                  src="/instagramIcon.png"
+                  alt="Instagram"
+                  width={32}
+                  height={32}
+                  className="opacity-80 hover:opacity-60 transition-opacity cursor-pointer"
+                />
+              </div>
+            </form>
           </div>
-          <div className="bg-white/80 p-6 rounded-lg text-left">
-            <h3 className="font-bold text-contact mb-3">Address</h3>
-            <p className="text-sm">123 Design Street<br />Art District, AD 12345</p>
-          </div>
-          <div className="bg-white/80 p-6 rounded-lg text-left">
-            <h3 className="font-bold text-contact mb-3">Hours</h3>
-            <p className="text-sm">Mon-Fri: 9AM-6PM<br />Sat: 10AM-4PM</p>
-          </div>
-        </div>
+        )}
       </div>
     </div>
   );
