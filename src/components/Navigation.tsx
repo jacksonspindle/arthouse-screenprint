@@ -3,11 +3,10 @@ import Image from 'next/image';
 type Section = 'home' | 'printing' | 'shop' | 'repairs' | 'contact' | 'about' | 'clients';
 
 interface NavigationProps {
-  activeSection: Section;
   setActiveSection: (section: Section) => void;
 }
 
-export default function Navigation({ activeSection, setActiveSection }: NavigationProps) {
+export default function Navigation({ setActiveSection }: NavigationProps) {
   return (
     <div className="fixed right-4 top-3/5 transform -translate-y-1/2 w-12 shadow-lg z-50">
       <button 

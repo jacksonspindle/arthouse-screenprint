@@ -40,7 +40,7 @@ export default function Home() {
       <Header setActiveSection={setActiveSection} />
       
       {/* Persistent Navigation */}
-      <Navigation activeSection={activeSection} setActiveSection={setActiveSection} />
+      <Navigation setActiveSection={setActiveSection} />
       
       {/* Persistent Footer */}
       <Footer />
