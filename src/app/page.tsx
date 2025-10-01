@@ -17,15 +17,11 @@ type Section = 'home' | 'printing' | 'shop' | 'repairs' | 'contact' | 'about' | 
 export default function Home() {
   const [activeSection, setActiveSection] = useState<Section>('home');
   
-  // Prevent scrolling on pages that don't need it
+  // Prevent page-level scrolling on all sections
   useEffect(() => {
-    if (activeSection === 'home' || activeSection === 'about' || activeSection === 'contact' || activeSection === 'clients') {
-      document.body.style.overflow = 'hidden';
-      document.documentElement.style.overflow = 'hidden';
-    } else {
-      document.body.style.overflow = 'unset';
-      document.documentElement.style.overflow = 'unset';
-    }
+    // Always prevent document/body scrolling - only allow component-level scrolling
+    document.body.style.overflow = 'hidden';
+    document.documentElement.style.overflow = 'hidden';
     
     // Cleanup on unmount
     return () => {
@@ -46,7 +42,7 @@ export default function Home() {
       <Footer />
       
       {/* Main Content Area */}
-      <div className="pt-28 pb-32 h-full overflow-hidden">
+      <div className="pt-28 pb-50 h-full overflow-hidden">
         {activeSection === 'home' ? (
           /* Home Page - Logo */
           <div className="h-full flex items-right justify-center overflow-hidden">
