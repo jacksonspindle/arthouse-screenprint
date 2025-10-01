@@ -23,7 +23,13 @@ export default function RepairsSection() {
 
   // Initialize randomized images when component mounts
   useEffect(() => {
-    const imageList = Array.from({ length: 19 }, (_, i) => `/printing-page-images/${i + 1}.png`);
+    const imageList = [
+      '/repair-photos/1a.png',
+      '/repair-photos/2a.png', 
+      '/repair-photos/3A.png',
+      '/repair-photos/4A.png',
+      '/repair-photos/5A.png'
+    ];
     const shuffledImages = shuffleArray(imageList);
     // Triple the array for seamless infinite scroll
     setImages([...shuffledImages, ...shuffledImages, ...shuffledImages]);
@@ -135,13 +141,13 @@ export default function RepairsSection() {
             }}
           >
             {images.map((src, index) => (
-              <div key={index} className="w-80 h-full flex-shrink-0">
+              <div key={index} className="h-full flex-shrink-0">
                 <Image
                   src={src}
                   alt={`Repair work ${index + 1}`}
                   width={320}
                   height={200}
-                  className="w-full h-full object-cover"
+                  className="h-full w-auto object-contain"
                 />
               </div>
             ))}

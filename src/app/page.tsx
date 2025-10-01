@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Image from 'next/image';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
@@ -17,6 +17,23 @@ type Section = 'home' | 'printing' | 'shop' | 'repairs' | 'contact' | 'about' | 
 export default function Home() {
   const [activeSection, setActiveSection] = useState<Section>('home');
   
+  // Prevent scrolling on pages that don't need it
+  useEffect(() => {
+    if (activeSection === 'home' || activeSection === 'about' || activeSection === 'contact' || activeSection === 'clients') {
+      document.body.style.overflow = 'hidden';
+      document.documentElement.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'unset';
+      document.documentElement.style.overflow = 'unset';
+    }
+    
+    // Cleanup on unmount
+    return () => {
+      document.body.style.overflow = 'unset';
+      document.documentElement.style.overflow = 'unset';
+    };
+  }, [activeSection]);
+  
   return (
     <div className="w-full h-screen bg-white overflow-hidden">
       {/* Persistent Header */}
@@ -32,7 +49,7 @@ export default function Home() {
       <div className="pt-28 pb-32 h-full overflow-hidden">
         {activeSection === 'home' ? (
           /* Home Page - Logo */
-          <div className="h-full flex items-right justify-center">
+          <div className="h-full flex items-right justify-center overflow-hidden">
             <div className="text-center w-4/5 max-w-4xl">
               <button 
                 onClick={() => setActiveSection('home')} 
