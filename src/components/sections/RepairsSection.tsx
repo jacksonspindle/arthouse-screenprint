@@ -163,7 +163,7 @@ export default function RepairsSection() {
         {isFormSubmitted ? (
           <div className="flex flex-col items-center justify-center py-16">
             <h3 className="text-lg font-bold text-gray-400 mb-0 italic" style={{ fontFamily: 'serif' }}>Thanks!</h3>
-            <p className="text-lg font-bold text-gray-400 italic" style={{ fontFamily: 'serif' }}>You'll hear from us soon.</p>
+            <p className="text-lg font-bold text-gray-400 italic" style={{ fontFamily: 'serif' }}>You&apos;ll hear from us soon.</p>
           </div>
         ) : (
         <form className="space-y-4" onSubmit={handleFormSubmit}>
@@ -283,7 +283,7 @@ export default function RepairsSection() {
           </div>
           
           <div>
-            <label className="block text-gray-600 font-medium mb-1 text-sm" style={{ fontFamily: 'Helvetica-Bold-Condensed, Arial, sans-serif' }}>DESCRIBE WHAT YOU'RE LOOKING FOR:</label>
+            <label className="block text-gray-600 font-medium mb-1 text-sm" style={{ fontFamily: 'Helvetica-Bold-Condensed, Arial, sans-serif' }}>DESCRIBE WHAT YOU&apos;RE LOOKING FOR:</label>
             <textarea 
               className="w-full h-24 border border-gray-400 bg-white px-2 py-1 resize-none text-black"
             />

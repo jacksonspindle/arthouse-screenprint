@@ -17,7 +17,7 @@ export default function ContactSection() {
         {isFormSubmitted ? (
           <div className="flex flex-col items-center justify-center h-full">
             <h3 className="text-lg font-bold text-gray-400 mb-0 italic" style={{ fontFamily: 'serif' }}>Thanks!</h3>
-            <p className="text-lg font-bold text-gray-400 italic" style={{ fontFamily: 'serif' }}>You'll hear from us soon.</p>
+            <p className="text-lg font-bold text-gray-400 italic" style={{ fontFamily: 'serif' }}>You&apos;ll hear from us soon.</p>
           </div>
         ) : (
           <div className="max-w-md mx-auto px-8 pr-20 py-8">
