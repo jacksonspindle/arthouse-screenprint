@@ -213,7 +213,7 @@ export default function PrintingSection() {
       } else {
         setErrors({ general: result.message || 'Failed to submit form. Please try again.' });
       }
-    } catch (error) {
+    } catch {
       setErrors({ general: 'Network error. Please check your connection and try again.' });
     } finally {
       setIsSubmitting(false);

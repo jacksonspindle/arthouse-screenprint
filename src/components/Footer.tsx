@@ -19,7 +19,7 @@ const gradientBoxes = [
 ];
 
 export default function Footer() {
-  const { themeLevel, setThemeLevel, isDragging, setIsDragging } = useTheme();
+  const { setThemeLevel, isDragging, setIsDragging } = useTheme();
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
   const gradientRef = useRef<HTMLDivElement>(null);
 

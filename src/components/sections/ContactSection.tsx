@@ -67,7 +67,7 @@ export default function ContactSection() {
       } else {
         setErrors({ general: result.message || 'Failed to send message. Please try again.' });
       }
-    } catch (error) {
+    } catch {
       setErrors({ general: 'Network error. Please check your connection and try again.' });
     } finally {
       setIsSubmitting(false);

@@ -18,7 +18,10 @@ export async function POST(request: NextRequest) {
 
     // Extract files
     const files: File[] = [];
-    const attachments: any[] = [];
+    const attachments: Array<{
+      filename: string;
+      content: Buffer;
+    }> = [];
     
     for (const [key, value] of formData.entries()) {
       if (key.startsWith('file_') && value instanceof File) {
