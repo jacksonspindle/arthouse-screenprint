@@ -158,7 +158,7 @@ export default function RepairsSection() {
       {/* Form Section - Scrollable */}
       <div className="flex-1 overflow-y-auto">
         <div className="max-w-md mx-auto px-8 pr-20 py-8">
-        <h2 className="text-xl font-bold text-gray-500 mb-6 uppercase tracking-wide text-center" style={{ fontFamily: 'Helvetica-Bold-Condensed, Arial, sans-serif' }}>Submit for a Repair Quote</h2>
+        <h2 className="text-xl font-bold mb-6 uppercase tracking-wide text-center transition-colors duration-200" style={{ fontFamily: 'Helvetica-Bold-Condensed, Arial, sans-serif', color: 'var(--foreground)' }}>Submit for a Repair Quote</h2>
         
         {isFormSubmitted ? (
           <div className="flex flex-col items-center justify-center py-16">
@@ -168,7 +168,7 @@ export default function RepairsSection() {
         ) : (
         <form className="space-y-4" onSubmit={handleFormSubmit}>
           <div>
-            <label className="block text-gray-600 font-medium mb-1 text-sm" style={{ fontFamily: 'Helvetica-Bold-Condensed, Arial, sans-serif' }}>EMAIL/PHONE NUMBER:</label>
+            <label className="block font-medium mb-1 text-sm transition-colors duration-200" style={{ fontFamily: 'Helvetica-Bold-Condensed, Arial, sans-serif', color: 'var(--foreground)' }}>EMAIL/PHONE NUMBER:</label>
             <input 
               type="email" 
               className="w-full h-8 border border-gray-400 bg-white px-2 text-black"
@@ -176,7 +176,7 @@ export default function RepairsSection() {
           </div>
           
           <div>
-            <label className="block text-gray-600 font-medium mb-1 text-sm" style={{ fontFamily: 'Helvetica-Bold-Condensed, Arial, sans-serif' }}>
+            <label className="block font-medium mb-1 text-sm transition-colors duration-200" style={{ fontFamily: 'Helvetica-Bold-Condensed, Arial, sans-serif', color: 'var(--foreground)' }}>
               SELECT TYPE OF GARMENT <span className="text-[10px] text-gray-500">(SELECT ALL THAT APPLY)</span>
             </label>
             <div className="relative">
@@ -209,7 +209,7 @@ export default function RepairsSection() {
           </div>
           
           <div>
-            <label className="block text-gray-600 font-medium mb-1 text-sm" style={{ fontFamily: 'Helvetica-Bold-Condensed, Arial, sans-serif' }}>SELECT QUANTITY:</label>
+            <label className="block font-medium mb-1 text-sm transition-colors duration-200" style={{ fontFamily: 'Helvetica-Bold-Condensed, Arial, sans-serif', color: 'var(--foreground)' }}>SELECT QUANTITY:</label>
             <div className="relative">
               <select className="w-full h-8 border border-gray-400 bg-white pl-2 pr-8 appearance-none text-black">
                 <option></option>
@@ -226,7 +226,7 @@ export default function RepairsSection() {
           </div>
           
           <div>
-            <label className="block text-gray-600 font-medium mb-1 text-sm" style={{ fontFamily: 'Helvetica-Bold-Condensed, Arial, sans-serif' }}>SELECT TYPE OF REPAIR:</label>
+            <label className="block font-medium mb-1 text-sm transition-colors duration-200" style={{ fontFamily: 'Helvetica-Bold-Condensed, Arial, sans-serif', color: 'var(--foreground)' }}>SELECT TYPE OF REPAIR:</label>
             <div className="relative">
               <select className="w-full h-8 border border-gray-400 bg-white pl-2 pr-8 appearance-none text-black">
                 <option></option>
@@ -244,7 +244,7 @@ export default function RepairsSection() {
           </div>
           
           <div>
-            <label className="block text-gray-600 font-medium mb-1 text-sm" style={{ fontFamily: 'Helvetica-Bold-Condensed, Arial, sans-serif' }}>WILL YOU BE PROVIDING A REFERENCE GARMENT?</label>
+            <label className="block font-medium mb-1 text-sm transition-colors duration-200" style={{ fontFamily: 'Helvetica-Bold-Condensed, Arial, sans-serif', color: 'var(--foreground)' }}>WILL YOU BE PROVIDING A REFERENCE GARMENT?</label>
             <div className="relative">
               <select className="w-full h-8 border border-gray-400 bg-white pl-2 pr-8 appearance-none text-black">
                 <option></option>
@@ -268,7 +268,7 @@ export default function RepairsSection() {
           </div>
           
           <div>
-            <label className="block text-gray-600 font-medium mb-1 text-sm" style={{ fontFamily: 'Helvetica-Bold-Condensed, Arial, sans-serif' }}>TURNAROUND TIME:</label>
+            <label className="block font-medium mb-1 text-sm transition-colors duration-200" style={{ fontFamily: 'Helvetica-Bold-Condensed, Arial, sans-serif', color: 'var(--foreground)' }}>TURNAROUND TIME:</label>
             <div className="relative">
               <select className="w-full h-8 border border-gray-400 bg-white pl-2 pr-8 appearance-none text-black">
                 <option></option>
@@ -283,7 +283,7 @@ export default function RepairsSection() {
           </div>
           
           <div>
-            <label className="block text-gray-600 font-medium mb-1 text-sm" style={{ fontFamily: 'Helvetica-Bold-Condensed, Arial, sans-serif' }}>DESCRIBE WHAT YOU&apos;RE LOOKING FOR:</label>
+            <label className="block font-medium mb-1 text-sm transition-colors duration-200" style={{ fontFamily: 'Helvetica-Bold-Condensed, Arial, sans-serif', color: 'var(--foreground)' }}>DESCRIBE WHAT YOU&apos;RE LOOKING FOR:</label>
             <textarea 
               className="w-full h-24 border border-gray-400 bg-white px-2 py-1 resize-none text-black"
             />

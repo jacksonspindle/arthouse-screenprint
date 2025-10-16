@@ -21,11 +21,11 @@ export default function ContactSection() {
           </div>
         ) : (
           <div className="max-w-md mx-auto px-8 pr-20 py-8">
-            <h2 className="text-xl font-bold text-gray-500 mb-6 uppercase tracking-wide text-center mt-16" style={{ fontFamily: 'Helvetica-Bold-Condensed, Arial, sans-serif' }}>Contact</h2>
+            <h2 className="text-xl font-bold mb-6 uppercase tracking-wide text-center mt-16 transition-colors duration-200" style={{ fontFamily: 'Helvetica-Bold-Condensed, Arial, sans-serif', color: 'var(--foreground)' }}>Contact</h2>
             
             <form className="space-y-4" onSubmit={handleFormSubmit}>
               <div>
-                <label className="block text-gray-600 font-medium mb-1 text-sm" style={{ fontFamily: 'Helvetica-Bold-Condensed, Arial, sans-serif' }}>NAME:</label>
+                <label className="block font-medium mb-1 text-sm transition-colors duration-200" style={{ fontFamily: 'Helvetica-Bold-Condensed, Arial, sans-serif', color: 'var(--foreground)' }}>NAME:</label>
                 <input 
                   type="text" 
                   className="w-full h-8 border border-gray-400 bg-white px-2 text-black"
@@ -33,7 +33,7 @@ export default function ContactSection() {
               </div>
               
               <div>
-                <label className="block text-gray-600 font-medium mb-1 text-sm" style={{ fontFamily: 'Helvetica-Bold-Condensed, Arial, sans-serif' }}>MESSAGE:</label>
+                <label className="block font-medium mb-1 text-sm transition-colors duration-200" style={{ fontFamily: 'Helvetica-Bold-Condensed, Arial, sans-serif', color: 'var(--foreground)' }}>MESSAGE:</label>
                 <textarea 
                   className="w-full h-24 border border-gray-400 bg-white px-2 py-1 resize-none text-black"
                 />

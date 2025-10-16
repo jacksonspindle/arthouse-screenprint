@@ -17,7 +17,10 @@ export default function Header({ setActiveSection }: HeaderProps) {
           width={32}
           height={32}
           className="w-9 h-9"
-          style={{ filter: 'brightness(0.3) opacity(0.3)' }}
+          style={{ 
+            filter: `brightness(0) saturate(100%) invert(var(--icon-invert)) contrast(100%) brightness(1)`,
+            opacity: 0.3 
+          }}
         />
         {/* Line under top-left spiral */}
         <Image
@@ -26,7 +29,10 @@ export default function Header({ setActiveSection }: HeaderProps) {
           width={24}
           height={2}
           className="absolute top-12 left-1/2 transform -translate-x-1/2 w-9 h-0.5"
-          style={{ filter: 'brightness(0.3) opacity(0.4)' }}
+          style={{ 
+            filter: `brightness(0) saturate(100%) invert(var(--icon-invert)) contrast(100%) brightness(1)`,
+            opacity: 0.4 
+          }}
         />
         {/* Vertical line to the right of top-left spiral */}
         <Image
@@ -35,7 +41,10 @@ export default function Header({ setActiveSection }: HeaderProps) {
           width={24}
           height={2}
           className="absolute top-1/2 left-12 transform -translate-y-1/2 rotate-90 w-9 h-0.5"
-          style={{ filter: 'brightness(0.3) opacity(0.4)' }}
+          style={{ 
+            filter: `brightness(0) saturate(100%) invert(var(--icon-invert)) contrast(100%) brightness(1)`,
+            opacity: 0.4 
+          }}
         />
       </div>
       
@@ -46,7 +55,10 @@ export default function Header({ setActiveSection }: HeaderProps) {
           width={32}
           height={32}
           className="w-9 h-9"
-          style={{ filter: 'brightness(0.3) opacity(0.4)' }}
+          style={{ 
+            filter: `brightness(0) saturate(100%) invert(var(--icon-invert)) contrast(100%) brightness(1)`,
+            opacity: 0.4 
+          }}
         />
         {/* Line under top-right spiral */}
         <Image
@@ -55,7 +67,10 @@ export default function Header({ setActiveSection }: HeaderProps) {
           width={24}
           height={2}
           className="absolute top-12 left-1/2 transform -translate-x-1/2 w-9 h-0.5"
-          style={{ filter: 'brightness(0.3) opacity(0.3)' }}
+          style={{ 
+            filter: `brightness(0) saturate(100%) invert(var(--icon-invert)) contrast(100%) brightness(1)`,
+            opacity: 0.3 
+          }}
         />
         {/* Vertical line to the left of top-right spiral */}
         <Image
@@ -64,7 +79,10 @@ export default function Header({ setActiveSection }: HeaderProps) {
           width={24}
           height={2}
           className="absolute top-1/2 -left-10 transform -translate-y-1/2 rotate-90 w-9 h-0.5"
-          style={{ filter: 'brightness(0.3) opacity(0.4)' }}
+          style={{ 
+            filter: `brightness(0) saturate(100%) invert(var(--icon-invert)) contrast(100%) brightness(1)`,
+            opacity: 0.4 
+          }}
         />
       </div>
       
@@ -79,6 +97,9 @@ export default function Header({ setActiveSection }: HeaderProps) {
           width={48}
           height={48}
           className="w-12 h-12"
+          style={{ 
+            filter: `brightness(0) saturate(100%) invert(var(--icon-invert)) contrast(100%) brightness(1)` 
+          }}
         />
       </button>
     </div>

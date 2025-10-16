@@ -11,6 +11,7 @@ import RepairsSection from '@/components/sections/RepairsSection';
 import ContactSection from '@/components/sections/ContactSection';
 import AboutSection from '@/components/sections/AboutSection';
 import ClientsSection from '@/components/sections/ClientsSection';
+import { ThemeProvider } from '@/contexts/ThemeContext';
 
 type Section = 'home' | 'printing' | 'shop' | 'repairs' | 'contact' | 'about' | 'clients';
 
@@ -31,15 +32,19 @@ export default function Home() {
   }, [activeSection]);
   
   return (
-    <div className="w-full h-screen bg-white overflow-hidden">
-      {/* Persistent Header */}
-      <Header setActiveSection={setActiveSection} />
-      
-      {/* Persistent Navigation */}
-      <Navigation setActiveSection={setActiveSection} />
-      
-      {/* Persistent Footer */}
-      <Footer />
+    <ThemeProvider>
+      <div 
+        className="w-full h-screen overflow-hidden transition-colors duration-200" 
+        style={{ backgroundColor: 'var(--background)', color: 'var(--foreground)' }}
+      >
+        {/* Persistent Header */}
+        <Header setActiveSection={setActiveSection} />
+        
+        {/* Persistent Navigation */}
+        <Navigation setActiveSection={setActiveSection} />
+        
+        {/* Persistent Footer */}
+        <Footer />
       
       {/* Main Content Area */}
       <div className="pt-28 pb-50 h-full overflow-hidden">
@@ -57,24 +62,37 @@ export default function Home() {
                     alt="Arthouse Screen Print and Design Studio"
                     width={800}
                     height={200}
-                    className="w-full h-auto mx-auto mb-0"
+                    className="w-full h-auto mx-auto mb-0 transition-all duration-200"
+                    style={{ 
+                      filter: `invert(var(--icon-invert))` 
+                    }}
                     priority
                     onError={() => console.log('Logo failed to load')}
                   />
                   {/* Screen Print and Design Studio Text */}
                   <p 
-                    className="text-gray-400 whitespace-nowrap font-bold -mt-4"
+                    className="whitespace-nowrap font-bold -mt-4 transition-colors duration-200"
                     style={{ 
                       fontFamily: 'TimesNRCyrMT, serif', 
                       fontSize: '10px',
-                      letterSpacing: '1px'
+                      letterSpacing: '1px',
+                      color: 'var(--foreground)',
+                      opacity: 0.9
                     }}
                   >
                     SCREEN PRINT AND DESIGN STUDIO
                   </p>
                   {/* Fallback text in case logo doesn't load */}
                   <div className="absolute inset-0 flex items-center justify-center opacity-0 hover:opacity-100 transition-opacity">
-                    <div className="bg-black/5 p-2 rounded text-xs">Loading logo...</div>
+                    <div 
+                      className="p-2 rounded text-xs transition-colors duration-200"
+                      style={{ 
+                        backgroundColor: 'var(--gray-background)',
+                        color: 'var(--foreground)'
+                      }}
+                    >
+                      Loading logo...
+                    </div>
                   </div>
                 </div>
               </button>
@@ -93,7 +111,8 @@ export default function Home() {
             </div>
           </div>
         )}
+        </div>
       </div>
-    </div>
+    </ThemeProvider>
   );
 }

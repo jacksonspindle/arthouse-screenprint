@@ -30,7 +30,10 @@
 
 :root {
   --background: #ffffff;
-  --foreground: #171717;
+  --foreground: #000000;
+  --gray-background: #f3f4f6;
+  --icon-brightness: 0.3;
+  --icon-invert: 0;
 }
 
 @theme inline {
@@ -56,12 +59,7 @@
   --color-theme-dark: #000000;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
+/* Remove automatic dark mode preference to allow manual control */
 
 body {
   background: var(--background);

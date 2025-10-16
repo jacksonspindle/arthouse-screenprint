@@ -2,7 +2,7 @@ export default function ClientsSection() {
   return (
     <div className="h-full flex flex-col items-start justify-start pt-24 pl-8">
       <div className="text-left max-w-2xl">
-        <div className="text-base italic text-gray-600 leading-relaxed" style={{ fontFamily: 'serif' }}>
+        <div className="text-base italic leading-relaxed transition-colors duration-200" style={{ fontFamily: 'serif', color: 'var(--foreground)' }}>
           <div className="mb-6">
             <p>MoMa</p>
             <p>DEPOP</p>

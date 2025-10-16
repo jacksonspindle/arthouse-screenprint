@@ -152,7 +152,7 @@ export default function PrintingSection() {
       {/* Form Section - Scrollable */}
       <div className="flex-1 overflow-y-auto">
         <div className="max-w-md mx-auto px-8 pr-20 py-8">
-        <h2 className="text-xl font-bold text-gray-500 mb-6 uppercase tracking-wide text-center" style={{ fontFamily: 'Helvetica-Bold-Condensed, Arial, sans-serif' }}>Submit for a Print Quote</h2>
+        <h2 className="text-xl font-bold mb-6 uppercase tracking-wide text-center transition-colors duration-200" style={{ fontFamily: 'Helvetica-Bold-Condensed, Arial, sans-serif', color: 'var(--foreground)' }}>Submit for a Print Quote</h2>
         
         {isFormSubmitted ? (
           <div className="flex flex-col items-center justify-center py-16">
@@ -162,7 +162,7 @@ export default function PrintingSection() {
         ) : (
         <form className="space-y-4" onSubmit={handleFormSubmit}>
           <div>
-            <label className="block text-gray-600 font-medium mb-1 text-sm" style={{ fontFamily: 'Helvetica-Bold-Condensed, Arial, sans-serif' }}>EMAIL/PHONE NUMBER:</label>
+            <label className="block font-medium mb-1 text-sm transition-colors duration-200" style={{ fontFamily: 'Helvetica-Bold-Condensed, Arial, sans-serif', color: 'var(--foreground)' }}>EMAIL/PHONE NUMBER:</label>
             <input 
               type="email" 
               className="w-full h-8 border border-gray-400 bg-white px-2 text-black"
@@ -170,7 +170,7 @@ export default function PrintingSection() {
           </div>
           
           <div>
-            <label className="block text-gray-600 font-medium mb-1 text-sm" style={{ fontFamily: 'Helvetica-Bold-Condensed, Arial, sans-serif' }}>DO YOU HAVE ARTWORK ALREADY?</label>
+            <label className="block font-medium mb-1 text-sm transition-colors duration-200" style={{ fontFamily: 'Helvetica-Bold-Condensed, Arial, sans-serif', color: 'var(--foreground)' }}>DO YOU HAVE ARTWORK ALREADY?</label>
             <div className="relative">
               <select className="w-full h-8 border border-gray-400 bg-white pl-2 pr-8 appearance-none text-black">
                 <option></option>
@@ -194,7 +194,7 @@ export default function PrintingSection() {
           </div>
           
           <div>
-            <label className="block text-gray-600 font-medium mb-1 text-sm" style={{ fontFamily: 'Helvetica-Bold-Condensed, Arial, sans-serif' }}>SELECT TYPE OF GARMENT YOU WANT PRINTED:</label>
+            <label className="block font-medium mb-1 text-sm transition-colors duration-200" style={{ fontFamily: 'Helvetica-Bold-Condensed, Arial, sans-serif', color: 'var(--foreground)' }}>SELECT TYPE OF GARMENT YOU WANT PRINTED:</label>
             <div className="relative">
               <select className="w-full h-8 border border-gray-400 bg-white pl-2 pr-8 appearance-none text-black">
                 <option></option>
@@ -206,7 +206,7 @@ export default function PrintingSection() {
           </div>
           
           <div>
-            <label className="block text-gray-600 font-medium mb-1 text-sm" style={{ fontFamily: 'Helvetica-Bold-Condensed, Arial, sans-serif' }}>SELECT GARMENT COLOR:</label>
+            <label className="block font-medium mb-1 text-sm transition-colors duration-200" style={{ fontFamily: 'Helvetica-Bold-Condensed, Arial, sans-serif', color: 'var(--foreground)' }}>SELECT GARMENT COLOR:</label>
             <div className="relative">
               <select className="w-full h-8 border border-gray-400 bg-white pl-2 pr-8 appearance-none text-black">
                 <option></option>
@@ -218,7 +218,7 @@ export default function PrintingSection() {
           </div>
           
           <div>
-            <label className="block text-gray-600 font-medium mb-1 text-sm" style={{ fontFamily: 'Helvetica-Bold-Condensed, Arial, sans-serif' }}>SELECT QUANTITY:</label>
+            <label className="block font-medium mb-1 text-sm transition-colors duration-200" style={{ fontFamily: 'Helvetica-Bold-Condensed, Arial, sans-serif', color: 'var(--foreground)' }}>SELECT QUANTITY:</label>
             <div className="relative">
               <select className="w-full h-8 border border-gray-400 bg-white pl-2 pr-8 appearance-none text-black">
                 <option></option>
@@ -230,7 +230,7 @@ export default function PrintingSection() {
           </div>
           
           <div>
-            <label className="block text-gray-600 font-medium mb-1 text-sm" style={{ fontFamily: 'Helvetica-Bold-Condensed, Arial, sans-serif' }}>
+            <label className="block font-medium mb-1 text-sm transition-colors duration-200" style={{ fontFamily: 'Helvetica-Bold-Condensed, Arial, sans-serif', color: 'var(--foreground)' }}>
               SIZE BREAKDOWN: <span className="text-xs text-gray-500">(STANDARD SIZE BREAKDOWN HERE)</span>
             </label>
             <textarea 
@@ -239,7 +239,7 @@ export default function PrintingSection() {
           </div>
           
           <div>
-            <label className="block text-gray-600 font-medium mb-1 text-sm" style={{ fontFamily: 'Helvetica-Bold-Condensed, Arial, sans-serif' }}>
+            <label className="block font-medium mb-1 text-sm transition-colors duration-200" style={{ fontFamily: 'Helvetica-Bold-Condensed, Arial, sans-serif', color: 'var(--foreground)' }}>
               HOW MANY COLORS IS YOUR DESIGN? 
             </label>
             <input 
@@ -249,7 +249,7 @@ export default function PrintingSection() {
           </div>
           
           <div>
-            <label className="block text-gray-600 font-medium mb-1 text-sm" style={{ fontFamily: 'Helvetica-Bold-Condensed, Arial, sans-serif' }}>WHERE DO YOU WANT THE DESIGN PRINTED?</label>
+            <label className="block font-medium mb-1 text-sm transition-colors duration-200" style={{ fontFamily: 'Helvetica-Bold-Condensed, Arial, sans-serif', color: 'var(--foreground)' }}>WHERE DO YOU WANT THE DESIGN PRINTED?</label>
             <input 
               type="text" 
               className="w-full h-8 border border-gray-400 bg-white px-2 text-black"
@@ -257,7 +257,7 @@ export default function PrintingSection() {
           </div>
           
           <div>
-            <label className="block text-gray-600 font-medium mb-1 text-sm" style={{ fontFamily: 'Helvetica-Bold-Condensed, Arial, sans-serif' }}>TURNAROUND TIME:</label>
+            <label className="block font-medium mb-1 text-sm transition-colors duration-200" style={{ fontFamily: 'Helvetica-Bold-Condensed, Arial, sans-serif', color: 'var(--foreground)' }}>TURNAROUND TIME:</label>
             <div className="relative">
               <select className="w-full h-8 border border-gray-400 bg-white pl-2 pr-8 appearance-none text-black">
                 <option></option>
@@ -269,7 +269,7 @@ export default function PrintingSection() {
           </div>
           
           <div>
-            <label className="block text-gray-600 font-medium mb-1 text-sm" style={{ fontFamily: 'Helvetica-Bold-Condensed, Arial, sans-serif' }}>ANY ADDITIONAL INFO:</label>
+            <label className="block font-medium mb-1 text-sm transition-colors duration-200" style={{ fontFamily: 'Helvetica-Bold-Condensed, Arial, sans-serif', color: 'var(--foreground)' }}>ANY ADDITIONAL INFO:</label>
             <textarea 
               className="w-full h-16 border border-gray-400 bg-white px-2 py-1 resize-none text-black"
             />
