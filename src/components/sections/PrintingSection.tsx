@@ -1,11 +1,28 @@
 import { useEffect, useState, useRef } from 'react';
 import Image from 'next/image';
+import FileUpload from '@/components/FileUpload';
+import { PrintingFormData, FormErrors } from '@/types/forms';
 
 export default function PrintingSection() {
   const [images, setImages] = useState<string[]>([]);
   const [scrollPosition, setScrollPosition] = useState(0);
   const [isUserScrolling, setIsUserScrolling] = useState(false);
   const [isFormSubmitted, setIsFormSubmitted] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [formData, setFormData] = useState<PrintingFormData>({
+    email: '',
+    hasArtwork: '',
+    garmentType: '',
+    garmentColor: '',
+    quantity: '',
+    sizeBreakdown: '',
+    designColors: '',
+    printLocation: '',
+    turnaroundTime: '',
+    additionalInfo: '',
+    files: []
+  });
+  const [errors, setErrors] = useState<FormErrors>({});
   const animationRef = useRef<number | null>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const userScrollTimeoutRef = useRef<NodeJS.Timeout | null>(null);
@@ -110,10 +127,97 @@ export default function PrintingSection() {
     }
   };
 
+  // Handle input changes
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({ ...prev, [name]: value }));
+    // Clear error when user starts typing
+    if (errors[name]) {
+      setErrors(prev => ({ ...prev, [name]: '' }));
+    }
+  };
+
+  // Handle file changes
+  const handleFilesChange = (files: File[]) => {
+    setFormData(prev => ({ ...prev, files }));
+  };
+
+  // Validate form
+  const validateForm = (): boolean => {
+    const newErrors: FormErrors = {};
+
+    if (!formData.email.trim()) {
+      newErrors.email = 'Email/Phone is required';
+    } else if (formData.email.includes('@') && !/\S+@\S+\.\S+/.test(formData.email)) {
+      newErrors.email = 'Please enter a valid email address';
+    }
+
+    if (!formData.hasArtwork) newErrors.hasArtwork = 'Please select if you have artwork';
+    if (!formData.garmentType) newErrors.garmentType = 'Please select garment type';
+    if (!formData.quantity) newErrors.quantity = 'Please select quantity';
+    if (!formData.designColors.trim()) newErrors.designColors = 'Please specify number of colors';
+    if (!formData.printLocation.trim()) newErrors.printLocation = 'Please specify print location';
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
   // Handle form submission
-  const handleFormSubmit = (e: React.FormEvent) => {
+  const handleFormSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setIsFormSubmitted(true);
+    
+    if (!validateForm()) {
+      return;
+    }
+
+    setIsSubmitting(true);
+
+    try {
+      const formDataToSend = new FormData();
+      
+      // Add all form fields
+      Object.entries(formData).forEach(([key, value]) => {
+        if (key !== 'files') {
+          formDataToSend.append(key, value as string);
+        }
+      });
+
+      // Add files
+      formData.files.forEach((file, index) => {
+        formDataToSend.append(`file_${index}`, file);
+      });
+
+      const response = await fetch('/api/quote/printing', {
+        method: 'POST',
+        body: formDataToSend,
+      });
+
+      const result = await response.json();
+
+      if (result.success) {
+        setIsFormSubmitted(true);
+        // Reset form
+        setFormData({
+          email: '',
+          hasArtwork: '',
+          garmentType: '',
+          garmentColor: '',
+          quantity: '',
+          sizeBreakdown: '',
+          designColors: '',
+          printLocation: '',
+          turnaroundTime: '',
+          additionalInfo: '',
+          files: []
+        });
+      } else {
+        setErrors({ general: result.message || 'Failed to submit form. Please try again.' });
+      }
+    } catch (error) {
+      setErrors({ general: 'Network error. Please check your connection and try again.' });
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -154,6 +258,13 @@ export default function PrintingSection() {
         <div className="max-w-md mx-auto px-8 pr-20 py-8">
         <h2 className="text-xl font-bold mb-6 uppercase tracking-wide text-center transition-colors duration-200" style={{ fontFamily: 'Helvetica-Bold-Condensed, Arial, sans-serif', color: 'var(--foreground)' }}>Submit for a Print Quote</h2>
         
+        {/* General Error Message */}
+        {errors.general && (
+          <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
+            {errors.general}
+          </div>
+        )}
+        
         {isFormSubmitted ? (
           <div className="flex flex-col items-center justify-center py-16">
             <h3 className="text-lg font-bold text-gray-400 mb-0 italic" style={{ fontFamily: 'serif' }}>Thanks!</h3>
@@ -164,52 +275,90 @@ export default function PrintingSection() {
           <div>
             <label className="block font-medium mb-1 text-sm transition-colors duration-200" style={{ fontFamily: 'Helvetica-Bold-Condensed, Arial, sans-serif', color: 'var(--foreground)' }}>EMAIL/PHONE NUMBER:</label>
             <input 
-              type="email" 
-              className="w-full h-8 border border-gray-400 bg-white px-2 text-black"
+              type="text"
+              name="email"
+              value={formData.email}
+              onChange={handleInputChange}
+              className={`w-full h-8 border bg-white px-2 text-black ${errors.email ? 'border-red-400' : 'border-gray-400'}`}
+              placeholder="your@email.com or (555) 123-4567"
             />
+            {errors.email && <p className="text-red-500 text-xs mt-1">{errors.email}</p>}
           </div>
           
           <div>
             <label className="block font-medium mb-1 text-sm transition-colors duration-200" style={{ fontFamily: 'Helvetica-Bold-Condensed, Arial, sans-serif', color: 'var(--foreground)' }}>DO YOU HAVE ARTWORK ALREADY?</label>
             <div className="relative">
-              <select className="w-full h-8 border border-gray-400 bg-white pl-2 pr-8 appearance-none text-black">
-                <option></option>
-                <option>Yes</option>
-                <option>No</option>
+              <select 
+                name="hasArtwork"
+                value={formData.hasArtwork}
+                onChange={handleInputChange}
+                className={`w-full h-8 border bg-white pl-2 pr-8 appearance-none text-black ${errors.hasArtwork ? 'border-red-400' : 'border-gray-400'}`}
+              >
+                <option value="">Select...</option>
+                <option value="yes">Yes</option>
+                <option value="no">No</option>
               </select>
               <svg className="absolute right-2 top-1/2 transform -translate-y-1/2 w-3 h-3 text-gray-400 pointer-events-none" fill="currentColor" viewBox="0 0 20 20">
                 <path fillRule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clipRule="evenodd" />
               </svg>
             </div>
+            {errors.hasArtwork && <p className="text-red-500 text-xs mt-1">{errors.hasArtwork}</p>}
           </div>
           
-          <div className="flex justify-center my-4">
-            <button 
-              type="button"
-              className="px-4 py-1 border-1 border-dashed border-gray-400 bg-white text-gray-600 hover:border-gray-500 hover:text-gray-700 transition-colors"
-              style={{ fontFamily: 'Helvetica-Bold-Condensed, Arial, sans-serif' }}
-            >
-              UPLOAD
-            </button>
+          <div className="my-4">
+            <FileUpload
+              onFilesChange={handleFilesChange}
+              files={formData.files}
+              buttonText="UPLOAD ARTWORK"
+              maxFiles={5}
+            />
           </div>
           
           <div>
             <label className="block font-medium mb-1 text-sm transition-colors duration-200" style={{ fontFamily: 'Helvetica-Bold-Condensed, Arial, sans-serif', color: 'var(--foreground)' }}>SELECT TYPE OF GARMENT YOU WANT PRINTED:</label>
             <div className="relative">
-              <select className="w-full h-8 border border-gray-400 bg-white pl-2 pr-8 appearance-none text-black">
-                <option></option>
+              <select 
+                name="garmentType"
+                value={formData.garmentType}
+                onChange={handleInputChange}
+                className={`w-full h-8 border bg-white pl-2 pr-8 appearance-none text-black ${errors.garmentType ? 'border-red-400' : 'border-gray-400'}`}
+              >
+                <option value="">Select garment type...</option>
+                <option value="t-shirts">T-Shirts</option>
+                <option value="hoodies">Hoodies/Sweatshirts</option>
+                <option value="tank-tops">Tank Tops</option>
+                <option value="long-sleeves">Long Sleeves</option>
+                <option value="polo-shirts">Polo Shirts</option>
+                <option value="jackets">Jackets</option>
+                <option value="hats">Hats/Caps</option>
+                <option value="bags">Bags</option>
+                <option value="other">Other</option>
               </select>
               <svg className="absolute right-2 top-1/2 transform -translate-y-1/2 w-3 h-3 text-gray-400 pointer-events-none" fill="currentColor" viewBox="0 0 20 20">
                 <path fillRule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clipRule="evenodd" />
               </svg>
             </div>
+            {errors.garmentType && <p className="text-red-500 text-xs mt-1">{errors.garmentType}</p>}
           </div>
           
           <div>
             <label className="block font-medium mb-1 text-sm transition-colors duration-200" style={{ fontFamily: 'Helvetica-Bold-Condensed, Arial, sans-serif', color: 'var(--foreground)' }}>SELECT GARMENT COLOR:</label>
             <div className="relative">
-              <select className="w-full h-8 border border-gray-400 bg-white pl-2 pr-8 appearance-none text-black">
-                <option></option>
+              <select 
+                name="garmentColor"
+                value={formData.garmentColor}
+                onChange={handleInputChange}
+                className="w-full h-8 border border-gray-400 bg-white pl-2 pr-8 appearance-none text-black"
+              >
+                <option value="">Select color...</option>
+                <option value="white">White</option>
+                <option value="black">Black</option>
+                <option value="gray">Gray</option>
+                <option value="navy">Navy</option>
+                <option value="red">Red</option>
+                <option value="blue">Blue</option>
+                <option value="green">Green</option>
+                <option value="other">Other</option>
               </select>
               <svg className="absolute right-2 top-1/2 transform -translate-y-1/2 w-3 h-3 text-gray-400 pointer-events-none" fill="currentColor" viewBox="0 0 20 20">
                 <path fillRule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clipRule="evenodd" />
@@ -220,13 +369,25 @@ export default function PrintingSection() {
           <div>
             <label className="block font-medium mb-1 text-sm transition-colors duration-200" style={{ fontFamily: 'Helvetica-Bold-Condensed, Arial, sans-serif', color: 'var(--foreground)' }}>SELECT QUANTITY:</label>
             <div className="relative">
-              <select className="w-full h-8 border border-gray-400 bg-white pl-2 pr-8 appearance-none text-black">
-                <option></option>
+              <select 
+                name="quantity"
+                value={formData.quantity}
+                onChange={handleInputChange}
+                className={`w-full h-8 border bg-white pl-2 pr-8 appearance-none text-black ${errors.quantity ? 'border-red-400' : 'border-gray-400'}`}
+              >
+                <option value="">Select quantity...</option>
+                <option value="1-10">1-10</option>
+                <option value="11-25">11-25</option>
+                <option value="26-50">26-50</option>
+                <option value="51-100">51-100</option>
+                <option value="101-250">101-250</option>
+                <option value="250+">250+</option>
               </select>
               <svg className="absolute right-2 top-1/2 transform -translate-y-1/2 w-3 h-3 text-gray-400 pointer-events-none" fill="currentColor" viewBox="0 0 20 20">
                 <path fillRule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clipRule="evenodd" />
               </svg>
             </div>
+            {errors.quantity && <p className="text-red-500 text-xs mt-1">{errors.quantity}</p>}
           </div>
           
           <div>
@@ -234,7 +395,11 @@ export default function PrintingSection() {
               SIZE BREAKDOWN: <span className="text-xs text-gray-500">(STANDARD SIZE BREAKDOWN HERE)</span>
             </label>
             <textarea 
+              name="sizeBreakdown"
+              value={formData.sizeBreakdown}
+              onChange={handleInputChange}
               className="w-full h-16 border border-gray-400 bg-white px-2 py-1 resize-none text-black"
+              placeholder="XS: 2, S: 5, M: 10, L: 8, XL: 5..."
             />
           </div>
           
@@ -243,24 +408,42 @@ export default function PrintingSection() {
               HOW MANY COLORS IS YOUR DESIGN? 
             </label>
             <input 
-              type="text" 
-              className="w-full h-8 border border-gray-400 bg-white px-2 text-black"
+              type="text"
+              name="designColors"
+              value={formData.designColors}
+              onChange={handleInputChange}
+              className={`w-full h-8 border bg-white px-2 text-black ${errors.designColors ? 'border-red-400' : 'border-gray-400'}`}
+              placeholder="e.g., 2 colors, 4 colors, full color"
             />
+            {errors.designColors && <p className="text-red-500 text-xs mt-1">{errors.designColors}</p>}
           </div>
           
           <div>
             <label className="block font-medium mb-1 text-sm transition-colors duration-200" style={{ fontFamily: 'Helvetica-Bold-Condensed, Arial, sans-serif', color: 'var(--foreground)' }}>WHERE DO YOU WANT THE DESIGN PRINTED?</label>
             <input 
-              type="text" 
-              className="w-full h-8 border border-gray-400 bg-white px-2 text-black"
+              type="text"
+              name="printLocation"
+              value={formData.printLocation}
+              onChange={handleInputChange}
+              className={`w-full h-8 border bg-white px-2 text-black ${errors.printLocation ? 'border-red-400' : 'border-gray-400'}`}
+              placeholder="e.g., Front chest, Back, Front and back"
             />
+            {errors.printLocation && <p className="text-red-500 text-xs mt-1">{errors.printLocation}</p>}
           </div>
           
           <div>
             <label className="block font-medium mb-1 text-sm transition-colors duration-200" style={{ fontFamily: 'Helvetica-Bold-Condensed, Arial, sans-serif', color: 'var(--foreground)' }}>TURNAROUND TIME:</label>
             <div className="relative">
-              <select className="w-full h-8 border border-gray-400 bg-white pl-2 pr-8 appearance-none text-black">
-                <option></option>
+              <select 
+                name="turnaroundTime"
+                value={formData.turnaroundTime}
+                onChange={handleInputChange}
+                className="w-full h-8 border border-gray-400 bg-white pl-2 pr-8 appearance-none text-black"
+              >
+                <option value="">Select timeframe...</option>
+                <option value="standard">Standard (1-2 weeks)</option>
+                <option value="rush">Rush (3-5 days)</option>
+                <option value="emergency">Emergency (24-48 hours)</option>
               </select>
               <svg className="absolute right-2 top-1/2 transform -translate-y-1/2 w-3 h-3 text-gray-400 pointer-events-none" fill="currentColor" viewBox="0 0 20 20">
                 <path fillRule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clipRule="evenodd" />
@@ -271,17 +454,26 @@ export default function PrintingSection() {
           <div>
             <label className="block font-medium mb-1 text-sm transition-colors duration-200" style={{ fontFamily: 'Helvetica-Bold-Condensed, Arial, sans-serif', color: 'var(--foreground)' }}>ANY ADDITIONAL INFO:</label>
             <textarea 
+              name="additionalInfo"
+              value={formData.additionalInfo}
+              onChange={handleInputChange}
               className="w-full h-16 border border-gray-400 bg-white px-2 py-1 resize-none text-black"
+              placeholder="Any special requirements, deadlines, or other details..."
             />
           </div>
           
           <div className="flex justify-center mt-6">
             <button 
               type="submit"
-              className="px-4 py-1 border-1 border-dashed border-gray-400 bg-white text-gray-600 hover:border-gray-500 hover:text-gray-700 transition-colors"
+              disabled={isSubmitting}
+              className={`px-4 py-1 border-1 border-dashed border-gray-400 bg-white transition-colors ${
+                isSubmitting 
+                  ? 'text-gray-400 cursor-not-allowed' 
+                  : 'text-gray-600 hover:border-gray-500 hover:text-gray-700'
+              }`}
               style={{ fontFamily: 'Helvetica-Bold-Condensed, Arial, sans-serif' }}
             >
-              SUBMIT
+              {isSubmitting ? 'SUBMITTING...' : 'SUBMIT'}
             </button>
           </div>
         </form>
