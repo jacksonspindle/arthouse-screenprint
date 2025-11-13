@@ -11,7 +11,7 @@ import RepairsSection from '@/components/sections/RepairsSection';
 import ContactSection from '@/components/sections/ContactSection';
 import AboutSection from '@/components/sections/AboutSection';
 import ClientsSection from '@/components/sections/ClientsSection';
-import { ThemeProvider } from '@/contexts/ThemeContext';
+import { Providers } from '@/components/Providers';
 
 type Section = 'home' | 'printing' | 'shop' | 'repairs' | 'contact' | 'about' | 'clients';
 
@@ -32,7 +32,7 @@ export default function Home() {
   }, [activeSection]);
   
   return (
-    <ThemeProvider>
+    <Providers>
       <div 
         className="w-full h-screen overflow-hidden transition-colors duration-200" 
         style={{ backgroundColor: 'var(--background)', color: 'var(--foreground)' }}
@@ -113,6 +113,6 @@ export default function Home() {
         )}
         </div>
       </div>
-    </ThemeProvider>
+    </Providers>
   );
 }

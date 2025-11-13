@@ -23,7 +23,7 @@ const navItems: NavItem[] = [
   { section: 'contact', backgroundColor: '#2E3090', label: 'CONTACT' },
   { section: 'about', backgroundColor: '#EC1D25', label: 'ABOUT' },
   { section: 'clients', backgroundColor: '#00A451', label: 'CLIENTS' },
-  { section: 'home', backgroundColor: '#374151', label: undefined },
+  { section: 'home', backgroundColor: '#000000', label: undefined },
 ];
 
 export default function Navigation({ setActiveSection }: NavigationProps) {
