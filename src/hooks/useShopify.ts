@@ -1,6 +1,6 @@
 import { useQuery, useMutation } from '@apollo/client/react';
 import { useState, useEffect } from 'react';
-import { GET_PRODUCTS, CREATE_CART, ADD_TO_CART } from '@/lib/shopify-queries';
+import { GET_PRODUCTS, CREATE_CART } from '@/lib/shopify-queries';
 import { ShopifyProduct, ShopifyProductsResponse, LocalProduct, CartItem, CartCreateResponse } from '@/types/shopify';
 
 // Hook to fetch products from Shopify
@@ -40,21 +40,15 @@ export function useProducts() {
 // Hook to manage cart state
 export function useCart() {
   const [cartItems, setCartItems] = useState<CartItem[]>([]);
-  const [cartId, setCartId] = useState<string | null>(null);
 
   const [createCart] = useMutation<CartCreateResponse>(CREATE_CART);
-  const [addToCartMutation] = useMutation(ADD_TO_CART);
 
   // Load cart from localStorage on mount
   useEffect(() => {
     const savedCart = localStorage.getItem('shopify-cart');
-    const savedCartId = localStorage.getItem('shopify-cart-id');
     
     if (savedCart) {
       setCartItems(JSON.parse(savedCart));
-    }
-    if (savedCartId) {
-      setCartId(savedCartId);
     }
   }, []);
 
@@ -139,9 +133,6 @@ export function useCart() {
             price: node.merchandise.price
           });
         });
-        
-        setCartId(cart.id);
-        localStorage.setItem('shopify-cart-id', cart.id);
         
         // Debug the checkout URL
         console.log('checkoutUrl from Shopify:', cart.checkoutUrl);
