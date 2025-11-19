@@ -78,6 +78,47 @@ export default function PrintingSection() {
     };
   }, [isUserScrolling, images.length]);
 
+  // Touch handling for mobile
+  const [touchStart, setTouchStart] = useState<number>(0);
+
+  // Handle touch start
+  const handleTouchStart = (e: React.TouchEvent) => {
+    setTouchStart(e.targetTouches[0].clientX);
+    setIsUserScrolling(true);
+  };
+
+  // Handle touch move
+  const handleTouchMove = (e: React.TouchEvent) => {
+    e.preventDefault(); // Prevent page scrolling
+    
+    if (!touchStart) return;
+    
+    const delta = touchStart - e.targetTouches[0].clientX;
+    setScrollPosition(prev => {
+      const newPosition = prev + delta * 0.5; // Lower sensitivity for touch
+      const imageWidth = 320;
+      const totalWidth = (images.length / 3) * imageWidth;
+      
+      if (newPosition < 0) {
+        return totalWidth * 2 + newPosition;
+      } else if (newPosition >= totalWidth * 3) {
+        return newPosition - totalWidth;
+      }
+      return newPosition;
+    });
+  };
+
+  // Handle touch end
+  const handleTouchEnd = () => {
+    // Clear timeout and resume auto-scroll after delay
+    if (userScrollTimeoutRef.current) {
+      clearTimeout(userScrollTimeoutRef.current);
+    }
+    userScrollTimeoutRef.current = setTimeout(() => {
+      setIsUserScrolling(false);
+    }, 500); // Longer delay for touch
+  };
+
   // Handle touch/trackpad scrolling
   const handleScroll = (e: React.WheelEvent) => {
     // Always prevent default and stop propagation to completely block page scrolling
@@ -227,6 +268,9 @@ export default function PrintingSection() {
         ref={containerRef}
         className="relative h-48 overflow-hidden cursor-grab active:cursor-grabbing flex-shrink-0"
         onWheel={handleScroll}
+        onTouchStart={handleTouchStart}
+        onTouchMove={handleTouchMove}
+        onTouchEnd={handleTouchEnd}
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
       >
