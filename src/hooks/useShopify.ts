@@ -137,12 +137,18 @@ export function useCart() {
         // Debug the checkout URL
         console.log('checkoutUrl from Shopify:', cart.checkoutUrl);
         
-        // Instead of redirecting immediately, let's open in a new tab to test
-        console.log('Opening checkout in new tab for testing...');
-        window.open(cart.checkoutUrl, '_blank');
+        // Check if we're on a mobile device
+        const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
         
-        // Also log what we would normally redirect to
-        console.log('Would redirect to:', cart.checkoutUrl);
+        if (isMobile) {
+          // On mobile, redirect in the same window to avoid popup blockers
+          console.log('Mobile detected - redirecting in same window');
+          window.location.href = cart.checkoutUrl;
+        } else {
+          // On desktop, open in new tab for better UX
+          console.log('Desktop detected - opening in new tab');
+          window.open(cart.checkoutUrl, '_blank');
+        }
       } else if (data?.cartCreate?.userErrors && data.cartCreate.userErrors.length > 0) {
         console.error('Cart creation errors:', data.cartCreate.userErrors);
         throw new Error(data.cartCreate.userErrors[0].message);
