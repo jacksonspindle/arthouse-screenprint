@@ -25,20 +25,28 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0, orientation=portrait" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
         <meta name="screen-orientation" content="portrait" />
-        <meta name="orientation" content="portrait" />
         <style>{`
-          @media screen and (orientation: landscape) {
-            html {
-              transform: rotate(-90deg);
-              transform-origin: left top;
-              width: 100vh;
-              height: 100vw;
-              overflow-x: hidden;
-              position: absolute;
-              top: 100%;
+          @media screen and (orientation: landscape) and (max-height: 768px) {
+            body::before {
+              content: "Please rotate your device to portrait mode";
+              position: fixed;
+              top: 0;
               left: 0;
+              width: 100vw;
+              height: 100vh;
+              background: black;
+              color: white;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              font-size: 18px;
+              text-align: center;
+              z-index: 9999;
+            }
+            body > * {
+              display: none;
             }
           }
         `}</style>
