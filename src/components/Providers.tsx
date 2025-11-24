@@ -3,12 +3,15 @@
 import { ApolloProvider } from '@apollo/client/react';
 import { shopifyClient } from '@/lib/shopify';
 import { ThemeProvider } from '@/contexts/ThemeContext';
+import { CartProvider } from '@/contexts/CartContext';
 
 export function Providers({ children }: { children: React.ReactNode }) {
   return (
     <ApolloProvider client={shopifyClient}>
       <ThemeProvider>
-        {children}
+        <CartProvider>
+          {children}
+        </CartProvider>
       </ThemeProvider>
     </ApolloProvider>
   );

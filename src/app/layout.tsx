@@ -25,31 +25,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
-        <meta name="screen-orientation" content="portrait" />
-        <style>{`
-          @media screen and (orientation: landscape) and (max-height: 768px) {
-            body::before {
-              content: "Please rotate your device to portrait mode";
-              position: fixed;
-              top: 0;
-              left: 0;
-              width: 100vw;
-              height: 100vh;
-              background: black;
-              color: white;
-              display: flex;
-              align-items: center;
-              justify-content: center;
-              font-size: 18px;
-              text-align: center;
-              z-index: 9999;
-            }
-            body > * {
-              display: none;
-            }
-          }
-        `}</style>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
       </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}

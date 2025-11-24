@@ -1,6 +1,7 @@
 import Image from 'next/image';
 import { useState } from 'react';
-import { useProducts, useCart } from '@/hooks/useShopify';
+import { useProducts } from '@/hooks/useShopify';
+import { useCartContext } from '@/contexts/CartContext';
 import { LocalProduct, ShopifyProduct } from '@/types/shopify';
 
 // Fallback products in case Shopify is unavailable
@@ -58,11 +59,12 @@ const fallbackProducts: LocalProduct[] = [
 
 export default function ShopSection() {
   const { products, shopifyProducts, loading, error } = useProducts();
-  const { addToCart, proceedToCheckout } = useCart();
+  const { addToCart } = useCartContext();
   const [selectedProduct, setSelectedProduct] = useState<LocalProduct | null>(null);
   const [selectedVariant, setSelectedVariant] = useState<string | null>(null);
   const [selectedOptions, setSelectedOptions] = useState<{[key: string]: string}>({});
   const [currentImageIndex, setCurrentImageIndex] = useState<number>(0);
+  const [addedToCart, setAddedToCart] = useState<boolean>(false);
 
   // Use fallback products if Shopify is unavailable or loading
   const displayProducts = error || products.length === 0 ? fallbackProducts : products;
@@ -88,6 +90,7 @@ export default function ShopSection() {
     setSelectedVariant(null);
     setSelectedOptions({});
     setCurrentImageIndex(0);
+    setAddedToCart(false);
   };
 
   // Get the corresponding Shopify product for variants
@@ -139,8 +142,8 @@ export default function ShopSection() {
     }
   };
 
-  // Handle add to cart - now with real Shopify integration
-  const handleAddToCart = async () => {
+  // Handle add to cart - adds item to cart without redirecting to checkout
+  const handleAddToCart = () => {
     if (!selectedProduct || !selectedVariant) {
       alert('Please select all required options before adding to cart.');
       return;
@@ -153,7 +156,7 @@ export default function ShopSection() {
       return;
     }
 
-    const variant = shopifyProduct.variants.edges.find(({ node }) => 
+    const variant = shopifyProduct.variants.edges.find(({ node }) =>
       node.id === selectedVariant
     );
 
@@ -162,36 +165,22 @@ export default function ShopSection() {
       return;
     }
 
-    console.log('Adding to cart:', {
+    const cartItem = {
       variantId: selectedVariant,
       quantity: 1,
       productTitle: shopifyProduct.title,
       variantTitle: variant.node.title,
       price: variant.node.price.amount,
       image: shopifyProduct.images.edges[0]?.node.url
-    });
+    };
 
-    try {
-      const cartItem = {
-        variantId: selectedVariant,
-        quantity: 1,
-        productTitle: shopifyProduct.title,
-        variantTitle: variant.node.title,
-        price: variant.node.price.amount,
-        image: shopifyProduct.images.edges[0]?.node.url
-      };
+    addToCart(cartItem);
+    setAddedToCart(true);
 
-      // Add to local cart state for future use
-      await addToCart(cartItem);
-
-      console.log('Item added to cart, proceeding to checkout');
-      // Immediately proceed to checkout with the specific item
-      await proceedToCheckout([cartItem]);
-      
-    } catch (error) {
-      console.error('Error adding to cart:', error);
-      alert('There was an error adding the item to your cart. Please try again.');
-    }
+    // Reset the "added" feedback after 2 seconds
+    setTimeout(() => {
+      setAddedToCart(false);
+    }, 2000);
   };
 
   if (selectedProduct) {
@@ -369,12 +358,16 @@ export default function ShopSection() {
                 {selectedProduct.description}
               </p>
               
-              <button 
+              <button
                 onClick={handleAddToCart}
-                className="bg-black text-white py-2 px-8 font-medium text-sm tracking-wide hover:bg-gray-800 transition-colors" 
+                className={`py-2 px-8 font-medium text-sm tracking-wide transition-colors ${
+                  addedToCart
+                    ? 'bg-green-600 text-white'
+                    : 'bg-black text-white hover:bg-gray-800'
+                }`}
                 style={{ fontFamily: 'Helvetica-Bold-Condensed, Arial, sans-serif' }}
               >
-                ADD TO BAG
+                {addedToCart ? 'ADDED TO BAG!' : 'ADD TO BAG'}
               </button>
             </div>
           </div>

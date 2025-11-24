@@ -11,9 +11,10 @@ import RepairsSection from '@/components/sections/RepairsSection';
 import ContactSection from '@/components/sections/ContactSection';
 import AboutSection from '@/components/sections/AboutSection';
 import ClientsSection from '@/components/sections/ClientsSection';
+import CartSection from '@/components/sections/CartSection';
 import { Providers } from '@/components/Providers';
 
-type Section = 'home' | 'printing' | 'shop' | 'repairs' | 'contact' | 'about' | 'clients';
+type Section = 'home' | 'printing' | 'shop' | 'repairs' | 'contact' | 'about' | 'clients' | 'cart';
 
 export default function Home() {
   const [activeSection, setActiveSection] = useState<Section>('home');
@@ -108,6 +109,7 @@ export default function Home() {
               {activeSection === 'contact' && <ContactSection />}
               {activeSection === 'about' && <AboutSection />}
               {activeSection === 'clients' && <ClientsSection />}
+              {activeSection === 'cart' && <CartSection onContinueShopping={() => setActiveSection('shop')} />}
             </div>
           </div>
         )}

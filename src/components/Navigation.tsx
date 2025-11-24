@@ -4,7 +4,7 @@ import { useState, useRef, useCallback } from 'react';
 import { motion } from 'framer-motion';
 import Image from 'next/image';
 
-type Section = 'home' | 'printing' | 'shop' | 'repairs' | 'contact' | 'about' | 'clients';
+type Section = 'home' | 'printing' | 'shop' | 'repairs' | 'contact' | 'about' | 'clients' | 'cart';
 
 interface NavigationProps {
   setActiveSection: (section: Section) => void;
