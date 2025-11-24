@@ -96,25 +96,27 @@ export default function ContactSection() {
             
             <form className="space-y-4" onSubmit={handleFormSubmit}>
               <div>
-                <label className="block font-medium mb-1 text-sm transition-colors duration-200" style={{ fontFamily: 'Helvetica-Bold-Condensed, Arial, sans-serif', color: 'var(--foreground)' }}>NAME:</label>
+                <label className="block font-medium mb-1 text-sm transition-colors duration-200" style={{ fontFamily: 'Helvetica-Bold-Condensed, Arial, sans-serif', color: 'var(--form-label-color)' }}>NAME:</label>
                 <input 
                   type="text"
                   name="name"
                   value={formData.name}
                   onChange={handleInputChange}
-                  className={`w-full h-8 border bg-white px-2 text-black ${errors.name ? 'border-red-400' : 'border-gray-400'}`}
+                  className={`w-full h-8 border px-2 ${errors.name ? 'border-red-400' : 'border-gray-400'}`}
+                  style={{ fontFamily: 'Helvetica-Bold-Condensed, Arial, sans-serif', color: 'var(--form-label-color)', backgroundColor: 'var(--form-background-color)' }}
                   placeholder="Your name"
                 />
                 {errors.name && <p className="text-red-500 text-xs mt-1">{errors.name}</p>}
               </div>
               
               <div>
-                <label className="block font-medium mb-1 text-sm transition-colors duration-200" style={{ fontFamily: 'Helvetica-Bold-Condensed, Arial, sans-serif', color: 'var(--foreground)' }}>MESSAGE:</label>
+                <label className="block font-medium mb-1 text-sm transition-colors duration-200" style={{ fontFamily: 'Helvetica-Bold-Condensed, Arial, sans-serif', color: 'var(--form-label-color)' }}>MESSAGE:</label>
                 <textarea 
                   name="message"
                   value={formData.message}
                   onChange={handleInputChange}
-                  className={`w-full h-24 border bg-white px-2 py-1 resize-none text-black ${errors.message ? 'border-red-400' : 'border-gray-400'}`}
+                  className={`w-full h-24 border px-2 py-1 resize-none ${errors.message ? 'border-red-400' : 'border-gray-400'}`}
+                  style={{ fontFamily: 'Helvetica-Bold-Condensed, Arial, sans-serif', color: 'var(--form-label-color)', backgroundColor: 'var(--form-background-color)' }}
                   placeholder="Your message..."
                 />
                 {errors.message && <p className="text-red-500 text-xs mt-1">{errors.message}</p>}

@@ -50,17 +50,18 @@ export default function FileUpload({
         className={`
           flex justify-center cursor-pointer transition-colors
           ${isDragActive 
-            ? 'border-gray-600 bg-gray-50' 
-            : 'border-gray-400 bg-white hover:border-gray-500'
+            ? 'border-gray-600' 
+            : 'border-gray-400 hover:border-gray-500'
           }
           ${files.length >= maxFiles ? 'opacity-50 cursor-not-allowed' : ''}
         `}
+        style={{ backgroundColor: isDragActive ? 'var(--gray-background)' : 'var(--form-background-color)' }}
       >
         <input {...getInputProps()} />
         <button 
           type="button"
-          className="px-4 py-1 border-1 border-dashed border-gray-400 bg-white text-gray-600 hover:border-gray-500 hover:text-gray-700 transition-colors"
-          style={{ fontFamily: 'Helvetica-Bold-Condensed, Arial, sans-serif' }}
+          className="px-4 py-1 border-1 border-dashed border-gray-400 hover:border-gray-500 transition-colors"
+          style={{ fontFamily: 'Helvetica-Bold-Condensed, Arial, sans-serif', backgroundColor: 'var(--form-background-color)', color: 'var(--form-label-color)' }}
           disabled={files.length >= maxFiles}
         >
           {isDragActive ? 'DROP FILES HERE' : buttonText}
@@ -83,8 +84,8 @@ export default function FileUpload({
       {files.length > 0 && (
         <div className="space-y-1">
           {files.map((file, index) => (
-            <div key={index} className="flex items-center justify-between bg-gray-50 px-2 py-1 text-xs">
-              <span className="text-black truncate flex-1">
+            <div key={index} className="flex items-center justify-between px-2 py-1 text-xs" style={{ backgroundColor: 'var(--gray-background)' }}>
+              <span className="truncate flex-1" style={{ color: 'var(--form-label-color)' }}>
                 {file.name} ({(file.size / 1024).toFixed(1)}KB)
               </span>
               <button
@@ -100,7 +101,7 @@ export default function FileUpload({
       )}
 
       {/* Help Text */}
-      <p className="text-xs text-gray-500">
+      <p className="text-xs" style={{ color: 'var(--form-label-color)' }}>
         Drag & drop files here, or click to select. Max {maxFiles} files, {(maxSize / 1024 / 1024).toFixed(0)}MB each.
       </p>
     </div>

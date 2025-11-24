@@ -95,8 +95,15 @@ export default function Navigation({ setActiveSection }: NavigationProps) {
           style={{ 
             backgroundColor: item.backgroundColor
           }}
-          whileHover={{ scale: isDragging ? 1 : 1.05 }}
-          whileTap={{ scale: isDragging ? 1 : 0.95 }}
+          animate={{
+            scale: hoveredSection === item.section ? 1.15 : 1,
+            zIndex: hoveredSection === item.section ? 10 : 1,
+          }}
+          transition={{
+            duration: 0,
+          }}
+          whileHover={{ scale: isDragging ? (hoveredSection === item.section ? 1.15 : 1) : 1.05 }}
+          whileTap={{ scale: isDragging ? (hoveredSection === item.section ? 1.15 : 1) : 0.95 }}
         >
           {item.label ? (
             <span 

@@ -76,7 +76,7 @@ export default function Home() {
                       fontFamily: 'TimesNRCyrMT, serif', 
                       fontSize: '10px',
                       letterSpacing: '1px',
-                      color: 'var(--foreground)',
+                      color: 'var(--form-label-color)',
                       opacity: 0.9
                     }}
                   >

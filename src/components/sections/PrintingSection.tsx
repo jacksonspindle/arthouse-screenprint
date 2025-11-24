@@ -300,7 +300,7 @@ export default function PrintingSection() {
       {/* Form Section - Scrollable */}
       <div className="flex-1 overflow-y-auto">
         <div className="max-w-md mx-auto px-8 pr-20 py-8">
-        <h2 className="text-xl font-bold mb-6 uppercase tracking-wide text-center transition-colors duration-200" style={{ fontFamily: 'Helvetica-Bold-Condensed, Arial, sans-serif', color: 'var(--foreground)' }}>Submit for a Print Quote</h2>
+        <h2 className="text-xl font-bold mb-6 uppercase tracking-wide text-center transition-colors duration-200" style={{ fontFamily: 'Helvetica-Bold-Condensed, Arial, sans-serif', color: 'var(--form-label-color)' }}>Submit for a Print Quote</h2>
         
         {/* General Error Message */}
         {errors.general && (
@@ -317,26 +317,28 @@ export default function PrintingSection() {
         ) : (
         <form className="space-y-4" onSubmit={handleFormSubmit}>
           <div>
-            <label className="block font-medium mb-1 text-sm transition-colors duration-200" style={{ fontFamily: 'Helvetica-Bold-Condensed, Arial, sans-serif', color: 'var(--foreground)' }}>EMAIL/PHONE NUMBER:</label>
+            <label className="block font-medium mb-1 text-sm transition-colors duration-200" style={{ fontFamily: 'Helvetica-Bold-Condensed, Arial, sans-serif', color: 'var(--form-label-color)' }}>EMAIL/PHONE NUMBER:</label>
             <input 
               type="text"
               name="email"
               value={formData.email}
               onChange={handleInputChange}
-              className={`w-full h-8 border bg-white px-2 text-black ${errors.email ? 'border-red-400' : 'border-gray-400'}`}
+              className={`w-full h-8 border  px-2  ${errors.email ? 'border-red-400' : 'border-gray-400'}`}
+              style={{ fontFamily: 'Helvetica-Bold-Condensed, Arial, sans-serif', color: 'var(--form-label-color)', backgroundColor: 'var(--form-background-color)' }}
               placeholder="your@email.com or (555) 123-4567"
             />
             {errors.email && <p className="text-red-500 text-xs mt-1">{errors.email}</p>}
           </div>
           
           <div>
-            <label className="block font-medium mb-1 text-sm transition-colors duration-200" style={{ fontFamily: 'Helvetica-Bold-Condensed, Arial, sans-serif', color: 'var(--foreground)' }}>DO YOU HAVE ARTWORK ALREADY?</label>
+            <label className="block font-medium mb-1 text-sm transition-colors duration-200" style={{ fontFamily: 'Helvetica-Bold-Condensed, Arial, sans-serif', color: 'var(--form-label-color)' }}>DO YOU HAVE ARTWORK ALREADY?</label>
             <div className="relative">
               <select 
                 name="hasArtwork"
                 value={formData.hasArtwork}
                 onChange={handleInputChange}
-                className={`w-full h-8 border bg-white pl-2 pr-8 appearance-none text-black ${errors.hasArtwork ? 'border-red-400' : 'border-gray-400'}`}
+                className={`w-full h-8 border  pl-2 pr-8 appearance-none  ${errors.hasArtwork ? 'border-red-400' : 'border-gray-400'}`}
+                style={{ fontFamily: 'Helvetica-Bold-Condensed, Arial, sans-serif', color: 'var(--form-label-color)', backgroundColor: 'var(--form-background-color)' }}
               >
                 <option value="">Select...</option>
                 <option value="yes">Yes</option>
@@ -359,13 +361,14 @@ export default function PrintingSection() {
           </div>
           
           <div>
-            <label className="block font-medium mb-1 text-sm transition-colors duration-200" style={{ fontFamily: 'Helvetica-Bold-Condensed, Arial, sans-serif', color: 'var(--foreground)' }}>SELECT TYPE OF GARMENT YOU WANT PRINTED:</label>
+            <label className="block font-medium mb-1 text-sm transition-colors duration-200" style={{ fontFamily: 'Helvetica-Bold-Condensed, Arial, sans-serif', color: 'var(--form-label-color)' }}>SELECT TYPE OF GARMENT YOU WANT PRINTED:</label>
             <div className="relative">
               <select 
                 name="garmentType"
                 value={formData.garmentType}
                 onChange={handleInputChange}
-                className={`w-full h-8 border bg-white pl-2 pr-8 appearance-none text-black ${errors.garmentType ? 'border-red-400' : 'border-gray-400'}`}
+                className={`w-full h-8 border  pl-2 pr-8 appearance-none  ${errors.garmentType ? 'border-red-400' : 'border-gray-400'}`}
+                style={{ fontFamily: 'Helvetica-Bold-Condensed, Arial, sans-serif', color: 'var(--form-label-color)', backgroundColor: 'var(--form-background-color)' }}
               >
                 <option value="">Select garment type...</option>
                 <option value="t-shirts">T-Shirts</option>
@@ -386,13 +389,14 @@ export default function PrintingSection() {
           </div>
           
           <div>
-            <label className="block font-medium mb-1 text-sm transition-colors duration-200" style={{ fontFamily: 'Helvetica-Bold-Condensed, Arial, sans-serif', color: 'var(--foreground)' }}>SELECT GARMENT COLOR:</label>
+            <label className="block font-medium mb-1 text-sm transition-colors duration-200" style={{ fontFamily: 'Helvetica-Bold-Condensed, Arial, sans-serif', color: 'var(--form-label-color)' }}>SELECT GARMENT COLOR:</label>
             <div className="relative">
               <select 
                 name="garmentColor"
                 value={formData.garmentColor}
                 onChange={handleInputChange}
-                className="w-full h-8 border border-gray-400 bg-white pl-2 pr-8 appearance-none text-black"
+                className="w-full h-8 border border-gray-400  pl-2 pr-8 appearance-none "
+                style={{ fontFamily: 'Helvetica-Bold-Condensed, Arial, sans-serif', color: 'var(--form-label-color)', backgroundColor: 'var(--form-background-color)' }}
               >
                 <option value="">Select color...</option>
                 <option value="white">White</option>
@@ -411,13 +415,14 @@ export default function PrintingSection() {
           </div>
           
           <div>
-            <label className="block font-medium mb-1 text-sm transition-colors duration-200" style={{ fontFamily: 'Helvetica-Bold-Condensed, Arial, sans-serif', color: 'var(--foreground)' }}>SELECT QUANTITY:</label>
+            <label className="block font-medium mb-1 text-sm transition-colors duration-200" style={{ fontFamily: 'Helvetica-Bold-Condensed, Arial, sans-serif', color: 'var(--form-label-color)' }}>SELECT QUANTITY:</label>
             <div className="relative">
               <select 
                 name="quantity"
                 value={formData.quantity}
                 onChange={handleInputChange}
-                className={`w-full h-8 border bg-white pl-2 pr-8 appearance-none text-black ${errors.quantity ? 'border-red-400' : 'border-gray-400'}`}
+                className={`w-full h-8 border  pl-2 pr-8 appearance-none  ${errors.quantity ? 'border-red-400' : 'border-gray-400'}`}
+                style={{ fontFamily: 'Helvetica-Bold-Condensed, Arial, sans-serif', color: 'var(--form-label-color)', backgroundColor: 'var(--form-background-color)' }}
               >
                 <option value="">Select quantity...</option>
                 <option value="1-10">1-10</option>
@@ -435,20 +440,21 @@ export default function PrintingSection() {
           </div>
           
           <div>
-            <label className="block font-medium mb-1 text-sm transition-colors duration-200" style={{ fontFamily: 'Helvetica-Bold-Condensed, Arial, sans-serif', color: 'var(--foreground)' }}>
+            <label className="block font-medium mb-1 text-sm transition-colors duration-200" style={{ fontFamily: 'Helvetica-Bold-Condensed, Arial, sans-serif', color: 'var(--form-label-color)' }}>
               SIZE BREAKDOWN: <span className="text-xs text-gray-500">(STANDARD SIZE BREAKDOWN HERE)</span>
             </label>
             <textarea 
               name="sizeBreakdown"
               value={formData.sizeBreakdown}
               onChange={handleInputChange}
-              className="w-full h-16 border border-gray-400 bg-white px-2 py-1 resize-none text-black"
+              className="w-full h-16 border border-gray-400  px-2 py-1 resize-none "
+              style={{ fontFamily: 'Helvetica-Bold-Condensed, Arial, sans-serif', color: 'var(--form-label-color)', backgroundColor: 'var(--form-background-color)' }}
               placeholder="XS: 2, S: 5, M: 10, L: 8, XL: 5..."
             />
           </div>
           
           <div>
-            <label className="block font-medium mb-1 text-sm transition-colors duration-200" style={{ fontFamily: 'Helvetica-Bold-Condensed, Arial, sans-serif', color: 'var(--foreground)' }}>
+            <label className="block font-medium mb-1 text-sm transition-colors duration-200" style={{ fontFamily: 'Helvetica-Bold-Condensed, Arial, sans-serif', color: 'var(--form-label-color)' }}>
               HOW MANY COLORS IS YOUR DESIGN? 
             </label>
             <input 
@@ -456,33 +462,36 @@ export default function PrintingSection() {
               name="designColors"
               value={formData.designColors}
               onChange={handleInputChange}
-              className={`w-full h-8 border bg-white px-2 text-black ${errors.designColors ? 'border-red-400' : 'border-gray-400'}`}
+              className={`w-full h-8 border  px-2  ${errors.designColors ? 'border-red-400' : 'border-gray-400'}`}
+              style={{ fontFamily: 'Helvetica-Bold-Condensed, Arial, sans-serif', color: 'var(--form-label-color)', backgroundColor: 'var(--form-background-color)' }}
               placeholder="e.g., 2 colors, 4 colors, full color"
             />
             {errors.designColors && <p className="text-red-500 text-xs mt-1">{errors.designColors}</p>}
           </div>
           
           <div>
-            <label className="block font-medium mb-1 text-sm transition-colors duration-200" style={{ fontFamily: 'Helvetica-Bold-Condensed, Arial, sans-serif', color: 'var(--foreground)' }}>WHERE DO YOU WANT THE DESIGN PRINTED?</label>
+            <label className="block font-medium mb-1 text-sm transition-colors duration-200" style={{ fontFamily: 'Helvetica-Bold-Condensed, Arial, sans-serif', color: 'var(--form-label-color)' }}>WHERE DO YOU WANT THE DESIGN PRINTED?</label>
             <input 
               type="text"
               name="printLocation"
               value={formData.printLocation}
               onChange={handleInputChange}
-              className={`w-full h-8 border bg-white px-2 text-black ${errors.printLocation ? 'border-red-400' : 'border-gray-400'}`}
+              className={`w-full h-8 border  px-2  ${errors.printLocation ? 'border-red-400' : 'border-gray-400'}`}
+              style={{ fontFamily: 'Helvetica-Bold-Condensed, Arial, sans-serif', color: 'var(--form-label-color)', backgroundColor: 'var(--form-background-color)' }}
               placeholder="e.g., Front chest, Back, Front and back"
             />
             {errors.printLocation && <p className="text-red-500 text-xs mt-1">{errors.printLocation}</p>}
           </div>
           
           <div>
-            <label className="block font-medium mb-1 text-sm transition-colors duration-200" style={{ fontFamily: 'Helvetica-Bold-Condensed, Arial, sans-serif', color: 'var(--foreground)' }}>TURNAROUND TIME:</label>
+            <label className="block font-medium mb-1 text-sm transition-colors duration-200" style={{ fontFamily: 'Helvetica-Bold-Condensed, Arial, sans-serif', color: 'var(--form-label-color)' }}>TURNAROUND TIME:</label>
             <div className="relative">
               <select 
                 name="turnaroundTime"
                 value={formData.turnaroundTime}
                 onChange={handleInputChange}
-                className="w-full h-8 border border-gray-400 bg-white pl-2 pr-8 appearance-none text-black"
+                className="w-full h-8 border border-gray-400  pl-2 pr-8 appearance-none "
+                style={{ fontFamily: 'Helvetica-Bold-Condensed, Arial, sans-serif', color: 'var(--form-label-color)', backgroundColor: 'var(--form-background-color)' }}
               >
                 <option value="">Select timeframe...</option>
                 <option value="standard">Standard (1-2 weeks)</option>
@@ -496,12 +505,13 @@ export default function PrintingSection() {
           </div>
           
           <div>
-            <label className="block font-medium mb-1 text-sm transition-colors duration-200" style={{ fontFamily: 'Helvetica-Bold-Condensed, Arial, sans-serif', color: 'var(--foreground)' }}>ANY ADDITIONAL INFO:</label>
+            <label className="block font-medium mb-1 text-sm transition-colors duration-200" style={{ fontFamily: 'Helvetica-Bold-Condensed, Arial, sans-serif', color: 'var(--form-label-color)' }}>ANY ADDITIONAL INFO:</label>
             <textarea 
               name="additionalInfo"
               value={formData.additionalInfo}
               onChange={handleInputChange}
-              className="w-full h-16 border border-gray-400 bg-white px-2 py-1 resize-none text-black"
+              className="w-full h-16 border border-gray-400  px-2 py-1 resize-none "
+              style={{ fontFamily: 'Helvetica-Bold-Condensed, Arial, sans-serif', color: 'var(--form-label-color)', backgroundColor: 'var(--form-background-color)' }}
               placeholder="Any special requirements, deadlines, or other details..."
             />
           </div>
@@ -510,12 +520,12 @@ export default function PrintingSection() {
             <button 
               type="submit"
               disabled={isSubmitting}
-              className={`px-4 py-1 border-1 border-dashed border-gray-400 bg-white transition-colors ${
+              className={`px-4 py-1 border-1 border-dashed border-gray-400  transition-colors ${
                 isSubmitting 
                   ? 'text-gray-400 cursor-not-allowed' 
                   : 'text-gray-600 hover:border-gray-500 hover:text-gray-700'
               }`}
-              style={{ fontFamily: 'Helvetica-Bold-Condensed, Arial, sans-serif' }}
+              style={{ fontFamily: 'Helvetica-Bold-Condensed, Arial, sans-serif', color: 'var(--form-label-color)', backgroundColor: 'var(--form-background-color)' }}
             >
               {isSubmitting ? 'SUBMITTING...' : 'SUBMIT'}
             </button>

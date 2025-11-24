@@ -64,6 +64,10 @@ export function ThemeProvider({ children }: ThemeProviderProps) {
     const darkBg = '#000000';
     const lightText = '#000000';
     const darkText = '#ffffff'; // Pure white for better contrast
+    const lightFormLabel = '#7f7f7f'; // Start form labels at this gray instead of black
+    const darkFormLabel = '#ffffff'; // Pure white for better contrast
+    const lightFormBg = '#ffffff'; // Form input backgrounds start white
+    const darkFormBg = '#000000'; // Form input backgrounds end black
     const lightGray = '#f3f4f6'; // gray-100
     const darkGray = '#1f2937'; // gray-800
     
@@ -72,11 +76,15 @@ export function ThemeProvider({ children }: ThemeProviderProps) {
     // Make text transition much more dramatic - use a very steep curve for bright white
     const textFactor = Math.pow(factor, 0.3); // Much steeper curve - white appears very early
     const textColor = interpolateColor(lightText, darkText, textFactor);
+    const formLabelColor = interpolateColor(lightFormLabel, darkFormLabel, textFactor);
+    const formBackgroundColor = interpolateColor(lightFormBg, darkFormBg, factor);
     const grayColor = interpolateColor(lightGray, darkGray, factor);
     
     // Update CSS custom properties
     document.documentElement.style.setProperty('--background', backgroundColor);
     document.documentElement.style.setProperty('--foreground', textColor);
+    document.documentElement.style.setProperty('--form-label-color', formLabelColor);
+    document.documentElement.style.setProperty('--form-background-color', formBackgroundColor);
     document.documentElement.style.setProperty('--gray-background', grayColor);
     
     // Calculate icon filter for spirals and lines
