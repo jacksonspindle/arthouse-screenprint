@@ -188,13 +188,13 @@ export default function ImageCarousel({ images: initialImages, altPrefix }: Imag
         style={{ transform: 'translateX(0px)' }}
       >
         {images.map((src, index) => (
-          <div key={index} className="h-full flex-shrink-0" style={{ width: '320px' }}>
+          <div key={index} className="h-full flex-shrink-0 w-80">
             <Image
               src={src}
               alt={`${altPrefix} ${(index % (images.length / 3)) + 1}`}
               width={320}
-              height={200}
-              className="h-full w-full object-contain pointer-events-none"
+              height={192}
+              className="h-full w-full object-cover pointer-events-none"
               draggable={false}
             />
           </div>
