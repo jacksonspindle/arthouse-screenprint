@@ -1,5 +1,5 @@
 import Image from 'next/image';
-import { useState } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { useProducts } from '@/hooks/useShopify';
 import { useCartContext } from '@/contexts/CartContext';
 import { LocalProduct, ShopifyProduct } from '@/types/shopify';
@@ -65,6 +65,14 @@ export default function ShopSection() {
   const [selectedOptions, setSelectedOptions] = useState<{[key: string]: string}>({});
   const [currentImageIndex, setCurrentImageIndex] = useState<number>(0);
   const [addedToCart, setAddedToCart] = useState<boolean>(false);
+  const productDetailRef = useRef<HTMLDivElement>(null);
+
+  // Reset scroll position when product is selected
+  useEffect(() => {
+    if (selectedProduct && productDetailRef.current) {
+      productDetailRef.current.scrollTop = 0;
+    }
+  }, [selectedProduct]);
 
   // Use fallback products if Shopify is unavailable or loading
   const displayProducts = error || products.length === 0 ? fallbackProducts : products;
@@ -192,6 +200,7 @@ export default function ShopSection() {
   if (selectedProduct) {
     return (
       <div
+        ref={productDetailRef}
         className="h-full overflow-y-auto p-8 pr-20 pt-12 pb-12"
         style={{
           maskImage: 'linear-gradient(to bottom, transparent, black 40px, black calc(100% - 40px), transparent)',
