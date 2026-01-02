@@ -5,7 +5,6 @@ export interface PrintingFormData {
   garmentColor: string;
   quantity: string;
   sizeBreakdown: string;
-  designColors: string;
   printLocation: string;
   turnaroundTime: string;
   additionalInfo: string;
@@ -25,6 +24,7 @@ export interface RepairsFormData {
 
 export interface ContactFormData {
   name: string;
+  email: string;
   message: string;
 }
 

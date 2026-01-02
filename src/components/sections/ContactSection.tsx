@@ -7,6 +7,7 @@ export default function ContactSection() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [formData, setFormData] = useState<ContactFormData>({
     name: '',
+    email: '',
     message: ''
   });
   const [errors, setErrors] = useState<FormErrors>({});
@@ -27,6 +28,11 @@ export default function ContactSection() {
 
     if (!formData.name.trim()) {
       newErrors.name = 'Name is required';
+    }
+    if (!formData.email.trim()) {
+      newErrors.email = 'Email/Phone is required';
+    } else if (formData.email.includes('@') && !/\S+@\S+\.\S+/.test(formData.email)) {
+      newErrors.email = 'Please enter a valid email address';
     }
     if (!formData.message.trim()) {
       newErrors.message = 'Message is required';
@@ -62,6 +68,7 @@ export default function ContactSection() {
         // Reset form
         setFormData({
           name: '',
+          email: '',
           message: ''
         });
       } else {
@@ -76,8 +83,14 @@ export default function ContactSection() {
 
   return (
     <div className="h-full flex flex-col">
-      {/* Form Section - Scrollable */}
-      <div className="flex-1 overflow-y-auto">
+      {/* Form Section - Scrollable with fade edges */}
+      <div
+        className="flex-1 overflow-y-auto"
+        style={{
+          maskImage: 'linear-gradient(to bottom, transparent, black 40px, black calc(100% - 40px), transparent)',
+          WebkitMaskImage: 'linear-gradient(to bottom, transparent, black 40px, black calc(100% - 40px), transparent)'
+        }}
+      >
         {/* General Error Message */}
         {errors.general && (
           <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
@@ -91,13 +104,13 @@ export default function ContactSection() {
             <p className="text-lg font-bold text-gray-400 italic" style={{ fontFamily: 'serif' }}>You&apos;ll hear from us soon.</p>
           </div>
         ) : (
-          <div className="max-w-md mx-auto px-8 pr-20 py-8">
-            <h2 className="text-xl font-bold mb-6 uppercase tracking-wide text-center mt-16 transition-colors duration-200" style={{ fontFamily: 'Helvetica-Bold-Condensed, Arial, sans-serif', color: 'var(--foreground)' }}>Contact</h2>
+          <div className="max-w-md mx-auto px-8 pr-20 py-8 pt-12 pb-12">
+            <h2 className="text-xl font-bold mb-6 uppercase tracking-wide text-center mt-8 transition-colors duration-200" style={{ fontFamily: 'Helvetica-Bold-Condensed, Arial, sans-serif', color: 'var(--foreground)' }}>Contact</h2>
             
             <form className="space-y-4" onSubmit={handleFormSubmit}>
               <div>
                 <label className="block font-medium mb-1 text-sm transition-colors duration-200" style={{ fontFamily: 'Helvetica-Bold-Condensed, Arial, sans-serif', color: 'var(--form-label-color)' }}>NAME:</label>
-                <input 
+                <input
                   type="text"
                   name="name"
                   value={formData.name}
@@ -108,7 +121,21 @@ export default function ContactSection() {
                 />
                 {errors.name && <p className="text-red-500 text-xs mt-1">{errors.name}</p>}
               </div>
-              
+
+              <div>
+                <label className="block font-medium mb-1 text-sm transition-colors duration-200" style={{ fontFamily: 'Helvetica-Bold-Condensed, Arial, sans-serif', color: 'var(--form-label-color)' }}>EMAIL/PHONE NUMBER:</label>
+                <input
+                  type="text"
+                  name="email"
+                  value={formData.email}
+                  onChange={handleInputChange}
+                  className={`w-full h-8 border px-2 ${errors.email ? 'border-red-400' : 'border-gray-400'}`}
+                  style={{ fontFamily: 'Helvetica-Bold-Condensed, Arial, sans-serif', color: 'var(--form-label-color)', backgroundColor: 'var(--form-background-color)' }}
+                  placeholder="your@email.com or (555) 123-4567"
+                />
+                {errors.email && <p className="text-red-500 text-xs mt-1">{errors.email}</p>}
+              </div>
+
               <div>
                 <label className="block font-medium mb-1 text-sm transition-colors duration-200" style={{ fontFamily: 'Helvetica-Bold-Condensed, Arial, sans-serif', color: 'var(--form-label-color)' }}>MESSAGE:</label>
                 <textarea 

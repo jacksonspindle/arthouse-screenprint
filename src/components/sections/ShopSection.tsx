@@ -72,7 +72,13 @@ export default function ShopSection() {
   // Show loading state briefly if we're fetching from Shopify
   if (loading && products.length === 0) {
     return (
-      <div className="h-full overflow-y-auto p-8 pr-20">
+      <div
+        className="h-full overflow-y-auto p-8 pr-20"
+        style={{
+          maskImage: 'linear-gradient(to bottom, transparent, black 40px, black calc(100% - 40px), transparent)',
+          WebkitMaskImage: 'linear-gradient(to bottom, transparent, black 40px, black calc(100% - 40px), transparent)'
+        }}
+      >
         <div className="max-w-2xl mx-auto">
           <div className="flex justify-center items-center h-64">
             <div className="text-gray-400 font-medium" style={{ fontFamily: 'Helvetica-Bold-Condensed, Arial, sans-serif' }}>
@@ -185,7 +191,13 @@ export default function ShopSection() {
 
   if (selectedProduct) {
     return (
-      <div className="h-full overflow-y-auto p-8 pr-20">
+      <div
+        className="h-full overflow-y-auto p-8 pr-20 pt-12 pb-12"
+        style={{
+          maskImage: 'linear-gradient(to bottom, transparent, black 40px, black calc(100% - 40px), transparent)',
+          WebkitMaskImage: 'linear-gradient(to bottom, transparent, black 40px, black calc(100% - 40px), transparent)'
+        }}
+      >
         <div className="max-w-md mx-auto">
           <button 
             onClick={() => setSelectedProduct(null)}
@@ -377,7 +389,13 @@ export default function ShopSection() {
   }
 
   return (
-    <div className="h-full overflow-y-auto p-8 pr-20">
+    <div
+      className="h-full overflow-y-auto p-8 pr-20 pt-12 pb-12"
+      style={{
+        maskImage: 'linear-gradient(to bottom, transparent, black 40px, black calc(100% - 40px), transparent)',
+        WebkitMaskImage: 'linear-gradient(to bottom, transparent, black 40px, black calc(100% - 40px), transparent)'
+      }}
+    >
       <div className="max-w-2xl mx-auto">
         <div className="space-y-8">
           {displayProducts.map((product, index) => (
