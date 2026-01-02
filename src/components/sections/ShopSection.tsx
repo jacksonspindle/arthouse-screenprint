@@ -382,11 +382,13 @@ export default function ShopSection() {
               <button
                 onClick={handleAddToCart}
                 className={`py-2 px-8 font-medium text-sm tracking-wide transition-colors ${
-                  addedToCart
-                    ? 'bg-green-600 text-white'
-                    : 'bg-black text-white hover:bg-gray-800'
+                  addedToCart ? 'bg-green-600 text-white' : ''
                 }`}
-                style={{ fontFamily: 'Helvetica-Bold-Condensed, Arial, sans-serif' }}
+                style={{
+                  fontFamily: 'Helvetica-Bold-Condensed, Arial, sans-serif',
+                  backgroundColor: addedToCart ? undefined : 'var(--foreground)',
+                  color: addedToCart ? undefined : 'var(--background)'
+                }}
               >
                 {addedToCart ? 'ADDED TO BAG!' : 'ADD TO BAG'}
               </button>
