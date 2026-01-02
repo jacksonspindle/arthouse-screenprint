@@ -194,7 +194,7 @@ export default function ImageCarousel({ images: initialImages, altPrefix }: Imag
               alt={`${altPrefix} ${(index % (images.length / 3)) + 1}`}
               width={320}
               height={192}
-              className="h-full w-full object-cover pointer-events-none"
+              className="h-full w-full object-cover object-bottom pointer-events-none"
               draggable={false}
             />
           </div>
