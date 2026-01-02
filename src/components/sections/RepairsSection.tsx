@@ -1,12 +1,19 @@
-import { useEffect, useState, useRef } from 'react';
-import Image from 'next/image';
+'use client';
+
+import { useState } from 'react';
 import FileUpload from '@/components/FileUpload';
+import ImageCarousel from '@/components/ImageCarousel';
 import { RepairsFormData, FormErrors } from '@/types/forms';
 
+const REPAIR_IMAGES = [
+  '/repair-photos/1a.png',
+  '/repair-photos/2a.png',
+  '/repair-photos/3A.png',
+  '/repair-photos/4A.png',
+  '/repair-photos/5A.png'
+];
+
 export default function RepairsSection() {
-  const [images, setImages] = useState<string[]>([]);
-  const [scrollPosition, setScrollPosition] = useState(0);
-  const [isUserScrolling, setIsUserScrolling] = useState(false);
   const [isFormSubmitted, setIsFormSubmitted] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [formData, setFormData] = useState<RepairsFormData>({
@@ -20,156 +27,6 @@ export default function RepairsSection() {
     files: []
   });
   const [errors, setErrors] = useState<FormErrors>({});
-  const animationRef = useRef<number | null>(null);
-  const containerRef = useRef<HTMLDivElement>(null);
-  const userScrollTimeoutRef = useRef<NodeJS.Timeout | null>(null);
-  const mouseOverRef = useRef<boolean>(false);
-
-  // Shuffle array function
-  const shuffleArray = (array: string[]) => {
-    const shuffled = [...array];
-    for (let i = shuffled.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
-      [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
-    }
-    return shuffled;
-  };
-
-  // Initialize randomized images when component mounts
-  useEffect(() => {
-    const imageList = [
-      '/repair-photos/1a.png',
-      '/repair-photos/2a.png', 
-      '/repair-photos/3A.png',
-      '/repair-photos/4A.png',
-      '/repair-photos/5A.png'
-    ];
-    const shuffledImages = shuffleArray(imageList);
-    // Triple the array for seamless infinite scroll
-    setImages([...shuffledImages, ...shuffledImages, ...shuffledImages]);
-  }, []);
-
-  // Smooth auto-scroll animation
-  useEffect(() => {
-    let lastTime = 0;
-    const animate = (currentTime: number) => {
-      if (!isUserScrolling && images.length > 0) {
-        if (currentTime - lastTime >= 16) { // ~60fps
-          setScrollPosition(prev => {
-            const newPosition = prev + 1; // Consistent speed
-            const imageWidth = 320; // Match actual image width
-            const totalWidth = (images.length / 3) * imageWidth; // Original set width
-            
-            // Reset to beginning of second set when we reach the third set
-            if (newPosition >= totalWidth * 2) {
-              return totalWidth;
-            }
-            return newPosition;
-          });
-          lastTime = currentTime;
-        }
-      }
-      animationRef.current = requestAnimationFrame(animate);
-    };
-
-    animationRef.current = requestAnimationFrame(animate);
-
-    return () => {
-      if (animationRef.current) {
-        cancelAnimationFrame(animationRef.current);
-      }
-    };
-  }, [isUserScrolling, images.length]);
-
-  // Touch handling for mobile
-  const [touchStart, setTouchStart] = useState<number>(0);
-
-  // Handle touch start
-  const handleTouchStart = (e: React.TouchEvent) => {
-    setTouchStart(e.targetTouches[0].clientX);
-    setIsUserScrolling(true);
-  };
-
-  // Handle touch move
-  const handleTouchMove = (e: React.TouchEvent) => {
-    e.preventDefault(); // Prevent page scrolling
-    
-    if (!touchStart) return;
-    
-    const delta = touchStart - e.targetTouches[0].clientX;
-    setScrollPosition(prev => {
-      const newPosition = prev + delta * 0.5; // Lower sensitivity for touch
-      const imageWidth = 320;
-      const totalWidth = (images.length / 3) * imageWidth;
-      
-      if (newPosition < 0) {
-        return totalWidth * 2 + newPosition;
-      } else if (newPosition >= totalWidth * 3) {
-        return newPosition - totalWidth;
-      }
-      return newPosition;
-    });
-  };
-
-  // Handle touch end
-  const handleTouchEnd = () => {
-    // Clear timeout and resume auto-scroll after delay
-    if (userScrollTimeoutRef.current) {
-      clearTimeout(userScrollTimeoutRef.current);
-    }
-    userScrollTimeoutRef.current = setTimeout(() => {
-      setIsUserScrolling(false);
-    }, 500); // Longer delay for touch
-  };
-
-  // Handle touch/trackpad scrolling
-  const handleScroll = (e: React.WheelEvent) => {
-    // Always prevent default and stop propagation to completely block page scrolling
-    e.preventDefault();
-    e.stopPropagation();
-    
-    setIsUserScrolling(true);
-    
-    // Use both deltaX and deltaY for horizontal scrolling
-    const delta = Math.abs(e.deltaX) > Math.abs(e.deltaY) ? e.deltaX : e.deltaY;
-    setScrollPosition(prev => {
-      const newPosition = prev + delta * 1.5; // Adjust sensitivity
-      const imageWidth = 320; // Match actual image width
-      const totalWidth = (images.length / 3) * imageWidth;
-      
-      if (newPosition < 0) {
-        return totalWidth * 2 + newPosition;
-      } else if (newPosition >= totalWidth * 3) {
-        return newPosition - totalWidth;
-      }
-      return newPosition;
-    });
-
-    // Clear previous timeout
-    if (userScrollTimeoutRef.current) {
-      clearTimeout(userScrollTimeoutRef.current);
-    }
-
-    // Resume auto-scroll after 300ms of scroll inactivity
-    userScrollTimeoutRef.current = setTimeout(() => {
-      setIsUserScrolling(false);
-    }, 300);
-  };
-
-  // Handle mouse enter/leave
-  const handleMouseEnter = () => {
-    mouseOverRef.current = true;
-  };
-
-  const handleMouseLeave = () => {
-    mouseOverRef.current = false;
-    // Immediately resume auto-scroll when mouse leaves
-    setIsUserScrolling(false);
-    // Clear any pending timeout
-    if (userScrollTimeoutRef.current) {
-      clearTimeout(userScrollTimeoutRef.current);
-    }
-  };
 
   // Handle input changes
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
@@ -207,7 +64,7 @@ export default function RepairsSection() {
   // Handle form submission
   const handleFormSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     if (!validateForm()) {
       return;
     }
@@ -216,7 +73,7 @@ export default function RepairsSection() {
 
     try {
       const formDataToSend = new FormData();
-      
+
       // Add all form fields
       Object.entries(formData).forEach(([key, value]) => {
         if (key !== 'files') {
@@ -261,40 +118,9 @@ export default function RepairsSection() {
 
   return (
     <div className="h-full flex flex-col">
-      {/* Image Carousel - Fixed height, no scroll */}
-      <div 
-        ref={containerRef}
-        className="relative h-48 overflow-hidden cursor-grab active:cursor-grabbing flex-shrink-0"
-        onWheel={handleScroll}
-        onTouchStart={handleTouchStart}
-        onTouchMove={handleTouchMove}
-        onTouchEnd={handleTouchEnd}
-        onMouseEnter={handleMouseEnter}
-        onMouseLeave={handleMouseLeave}
-      >
-        {images.length > 0 && (
-          <div 
-            className="flex h-full"
-            style={{ 
-              transform: `translateX(-${scrollPosition}px)`,
-              transition: isUserScrolling ? 'none' : 'transform 0.1s linear'
-            }}
-          >
-            {images.map((src, index) => (
-              <div key={index} className="h-full flex-shrink-0">
-                <Image
-                  src={src}
-                  alt={`Repair work ${index + 1}`}
-                  width={320}
-                  height={200}
-                  className="h-full w-auto object-contain"
-                />
-              </div>
-            ))}
-          </div>
-        )}
-      </div>
-      
+      {/* Image Carousel */}
+      <ImageCarousel images={REPAIR_IMAGES} altPrefix="Repair work" />
+
       {/* Form Section - Scrollable with fade edges */}
       <div
         className="flex-1 overflow-y-auto"
@@ -305,14 +131,14 @@ export default function RepairsSection() {
       >
         <div className="max-w-md mx-auto px-8 pr-20 py-8 pt-12 pb-12">
         <h2 className="text-xl font-bold mb-6 uppercase tracking-wide text-center transition-colors duration-200" style={{ fontFamily: 'Helvetica-Bold-Condensed, Arial, sans-serif', color: 'var(--form-label-color)' }}>Submit for a Repair Quote</h2>
-        
+
         {/* General Error Message */}
         {errors.general && (
           <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
             {errors.general}
           </div>
         )}
-        
+
         {isFormSubmitted ? (
           <div className="flex flex-col items-center justify-center py-16">
             <h3 className="text-lg font-bold text-gray-400 mb-0 italic" style={{ fontFamily: 'serif' }}>Thanks!</h3>
@@ -322,7 +148,7 @@ export default function RepairsSection() {
         <form className="space-y-4" onSubmit={handleFormSubmit}>
           <div>
             <label className="block font-medium mb-1 text-sm transition-colors duration-200" style={{ fontFamily: 'Helvetica-Bold-Condensed, Arial, sans-serif', color: 'var(--form-label-color)' }}>EMAIL/PHONE NUMBER:</label>
-            <input 
+            <input
               type="text"
               name="email"
               value={formData.email}
@@ -333,13 +159,13 @@ export default function RepairsSection() {
             />
             {errors.email && <p className="text-red-500 text-xs mt-1">{errors.email}</p>}
           </div>
-          
+
           <div>
             <label className="block font-medium mb-1 text-sm transition-colors duration-200" style={{ fontFamily: 'Helvetica-Bold-Condensed, Arial, sans-serif', color: 'var(--form-label-color)' }}>
               SELECT TYPE OF GARMENT <span className="text-[10px] text-gray-500">(SELECT ALL THAT APPLY)</span>
             </label>
             <div className="relative">
-              <select 
+              <select
                 name="garmentType"
                 value={formData.garmentType}
                 onChange={handleInputChange}
@@ -364,7 +190,7 @@ export default function RepairsSection() {
             </div>
             {errors.garmentType && <p className="text-red-500 text-xs mt-1">{errors.garmentType}</p>}
           </div>
-          
+
           <div className="my-4">
             <FileUpload
               onFilesChange={handleFilesChange}
@@ -373,7 +199,7 @@ export default function RepairsSection() {
               maxFiles={10}
             />
           </div>
-          
+
           <div>
             <label className="block font-medium mb-1 text-sm transition-colors duration-200" style={{ fontFamily: 'Helvetica-Bold-Condensed, Arial, sans-serif', color: 'var(--form-label-color)' }}>QUANTITY:</label>
             <input
@@ -387,11 +213,11 @@ export default function RepairsSection() {
             />
             {errors.quantity && <p className="text-red-500 text-xs mt-1">{errors.quantity}</p>}
           </div>
-          
+
           <div>
             <label className="block font-medium mb-1 text-sm transition-colors duration-200" style={{ fontFamily: 'Helvetica-Bold-Condensed, Arial, sans-serif', color: 'var(--form-label-color)' }}>SELECT TYPE OF REPAIR:</label>
             <div className="relative">
-              <select 
+              <select
                 name="repairType"
                 value={formData.repairType}
                 onChange={handleInputChange}
@@ -411,11 +237,11 @@ export default function RepairsSection() {
             </div>
             {errors.repairType && <p className="text-red-500 text-xs mt-1">{errors.repairType}</p>}
           </div>
-          
+
           <div>
             <label className="block font-medium mb-1 text-sm transition-colors duration-200" style={{ fontFamily: 'Helvetica-Bold-Condensed, Arial, sans-serif', color: 'var(--form-label-color)' }}>WILL YOU BE PROVIDING A REFERENCE GARMENT?</label>
             <div className="relative">
-              <select 
+              <select
                 name="hasReferenceGarment"
                 value={formData.hasReferenceGarment}
                 onChange={handleInputChange}
@@ -431,7 +257,7 @@ export default function RepairsSection() {
               </svg>
             </div>
           </div>
-          
+
           <div>
             <label className="block font-medium mb-1 text-sm transition-colors duration-200" style={{ fontFamily: 'Helvetica-Bold-Condensed, Arial, sans-serif', color: 'var(--form-label-color)' }}>
               WHEN DO YOU NEED THIS DONE BY? <span className="text-xs text-gray-500">(RUSH FEE FOR 1-2 WEEKS)</span>
@@ -446,10 +272,10 @@ export default function RepairsSection() {
               placeholder="e.g. January 15, 2026"
             />
           </div>
-          
+
           <div>
             <label className="block font-medium mb-1 text-sm transition-colors duration-200" style={{ fontFamily: 'Helvetica-Bold-Condensed, Arial, sans-serif', color: 'var(--form-label-color)' }}>DESCRIBE WHAT YOU&apos;RE LOOKING FOR:</label>
-            <textarea 
+            <textarea
               name="description"
               value={formData.description}
               onChange={handleInputChange}
@@ -458,14 +284,14 @@ export default function RepairsSection() {
               placeholder="Describe the repair needed, any specific requirements, etc."
             />
           </div>
-          
+
           <div className="flex justify-center mt-6">
-            <button 
+            <button
               type="submit"
               disabled={isSubmitting}
               className={`px-4 py-1 border-1 border-dashed border-gray-400  transition-colors ${
-                isSubmitting 
-                  ? 'text-gray-400 cursor-not-allowed' 
+                isSubmitting
+                  ? 'text-gray-400 cursor-not-allowed'
                   : 'text-gray-600 hover:border-gray-500 hover:text-gray-700'
               }`}
               style={{ fontFamily: 'Helvetica-Bold-Condensed, Arial, sans-serif', color: 'var(--form-label-color)', backgroundColor: 'var(--form-background-color)' }}
