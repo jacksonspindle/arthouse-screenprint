@@ -48,7 +48,7 @@ export default function Home() {
         <Footer />
       
       {/* Main Content Area */}
-      <div className="pt-28 pb-50 h-full overflow-hidden">
+      <div className="pt-28 pb-50 lg:pb-28 h-full overflow-hidden">
         {activeSection === 'home' ? (
           /* Home Page - Logo */
           <div className="h-full flex items-right justify-center overflow-hidden">
@@ -83,18 +83,6 @@ export default function Home() {
                   >
                     SCREEN PRINT AND DESIGN STUDIO
                   </p>
-                  {/* Fallback text in case logo doesn't load */}
-                  <div className="absolute inset-0 flex items-center justify-center opacity-0 hover:opacity-100 transition-opacity">
-                    <div 
-                      className="p-2 rounded text-xs transition-colors duration-200"
-                      style={{ 
-                        backgroundColor: 'var(--gray-background)',
-                        color: 'var(--foreground)'
-                      }}
-                    >
-                      Loading logo...
-                    </div>
-                  </div>
                 </div>
               </button>
             </div>

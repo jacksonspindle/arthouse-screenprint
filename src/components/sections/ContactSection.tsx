@@ -104,7 +104,7 @@ export default function ContactSection() {
             <p className="text-lg font-bold text-gray-400 italic" style={{ fontFamily: 'serif' }}>You&apos;ll hear from us soon.</p>
           </div>
         ) : (
-          <div className="max-w-md mx-auto px-8 pr-20 py-8 pt-12 pb-12">
+          <div className="max-w-md mx-auto px-8 py-8 pt-12 pb-12">
             <h2 className="text-xl font-bold mb-6 uppercase tracking-wide text-center mt-8 transition-colors duration-200" style={{ fontFamily: 'Helvetica-Bold-Condensed, Arial, sans-serif', color: 'var(--foreground)' }}>Contact</h2>
             
             <form className="space-y-4" onSubmit={handleFormSubmit}>

@@ -73,8 +73,8 @@ export function ThemeProvider({ children }: ThemeProviderProps) {
     
     // Interpolate colors with enhanced contrast for text
     const backgroundColor = interpolateColor(lightBg, darkBg, factor);
-    // Make text transition much more dramatic - use a very steep curve for bright white
-    const textFactor = Math.pow(factor, 0.3); // Much steeper curve - white appears very early
+    // Keep text dark on the lightest backgrounds; only transition to white once bg is genuinely dark
+    const textFactor = Math.pow(factor, 2);
     const textColor = interpolateColor(lightText, darkText, textFactor);
     const formLabelColor = interpolateColor(lightFormLabel, darkFormLabel, textFactor);
     const formBackgroundColor = interpolateColor(lightFormBg, darkFormBg, factor);

@@ -97,8 +97,8 @@ export async function POST(request: NextRequest) {
 
     // Send email using direct Resend API call
     const emailData = {
-      from: 'Arthouse Forms <onboarding@resend.dev>',
-      to: ['jackson.spindle@gmail.com'], // Temporarily using your verified email for testing
+      from: 'Arthouse Forms <forms@arthousescreens.com>',
+      to: ['arthousescreens@gmail.com'],
       subject: `New Print Quote Request from ${email}`,
       html: htmlContent,
       ...(attachments.length > 0 && { attachments })
