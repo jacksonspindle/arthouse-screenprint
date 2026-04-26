@@ -129,7 +129,7 @@ export default function RepairsSection() {
           WebkitMaskImage: 'linear-gradient(to bottom, transparent, black 40px, black calc(100% - 40px), transparent)'
         }}
       >
-        <div className="max-w-md mx-auto px-8 py-8 pt-12 pb-12">
+        <div className="max-w-md mx-auto px-8 pr-20 lg:pr-8 py-8 pt-12 pb-12">
         <h2 className="text-xl font-bold mb-6 uppercase tracking-wide text-center transition-colors duration-200" style={{ fontFamily: 'Helvetica-Bold-Condensed, Arial, sans-serif', color: 'var(--form-label-color)' }}>Submit for a Repair Quote</h2>
 
         {/* General Error Message */}
