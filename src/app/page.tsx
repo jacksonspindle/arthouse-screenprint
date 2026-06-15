@@ -48,7 +48,7 @@ export default function Home() {
         <Footer />
       
       {/* Main Content Area */}
-      <div className="pt-28 pb-28 lg:pb-20 h-full overflow-hidden">
+      <div className="pt-28 pb-26 lg:pb-18 h-full overflow-hidden">
         {activeSection === 'home' ? (
           /* Home Page - Logo */
           <div className="h-full flex items-right justify-center overflow-hidden">
