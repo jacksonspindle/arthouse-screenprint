@@ -43,10 +43,15 @@ export default function PrintingSection() {
   const validateForm = (): boolean => {
     const newErrors: FormErrors = {};
 
-    if (!formData.email.trim()) {
+    const contact = formData.email.trim();
+    if (!contact) {
       newErrors.email = 'Email/Phone is required';
-    } else if (formData.email.includes('@') && !/\S+@\S+\.\S+/.test(formData.email)) {
-      newErrors.email = 'Please enter a valid email address';
+    } else {
+      const isEmail = /^\S+@\S+\.\S+$/.test(contact);
+      const isPhone = /^\d{7,15}$/.test(contact.replace(/[\s().+\-]/g, ''));
+      if (!isEmail && !isPhone) {
+        newErrors.email = 'Please enter a valid email or phone number';
+      }
     }
 
     if (!formData.hasArtwork) newErrors.hasArtwork = 'Please select if you have artwork';
