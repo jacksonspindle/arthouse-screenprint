@@ -14,7 +14,6 @@ export async function POST(request: NextRequest) {
     const garmentColor = formData.get('garmentColor') as string;
     const quantity = formData.get('quantity') as string;
     const sizeBreakdown = formData.get('sizeBreakdown') as string;
-    const designColors = formData.get('designColors') as string;
     const printLocation = formData.get('printLocation') as string;
     const turnaroundTime = formData.get('turnaroundTime') as string;
     const additionalInfo = formData.get('additionalInfo') as string;
@@ -40,7 +39,7 @@ export async function POST(request: NextRequest) {
     }
 
     // Validate required fields
-    if (!email || !hasArtwork || !garmentType || !quantity || !designColors || !printLocation) {
+    if (!email || !hasArtwork || !garmentType || !quantity || !printLocation) {
       return NextResponse.json(
         { success: false, message: 'Missing required fields' },
         { status: 400 }
@@ -66,7 +65,6 @@ export async function POST(request: NextRequest) {
           ${garmentColor ? `<p><strong>Garment Color:</strong> ${garmentColor}</p>` : ''}
           <p><strong>Quantity:</strong> ${quantity}</p>
           ${sizeBreakdown ? `<p><strong>Size Breakdown:</strong> ${sizeBreakdown}</p>` : ''}
-          <p><strong>Design Colors:</strong> ${designColors}</p>
           <p><strong>Print Location:</strong> ${printLocation}</p>
           ${turnaroundTime ? `<p><strong>Turnaround Time:</strong> ${turnaroundTime}</p>` : ''}
         </div>

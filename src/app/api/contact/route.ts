@@ -5,12 +5,12 @@ const RESEND_API_KEY = process.env.RESEND_API_KEY;
 
 export async function POST(request: NextRequest) {
   try {
-    const { name, message } = await request.json();
+    const { name, email, message } = await request.json();
 
     // Validate required fields
-    if (!name || !message) {
+    if (!name || !email || !message) {
       return NextResponse.json(
-        { success: false, message: 'Name and message are required' },
+        { success: false, message: 'Name, email/phone, and message are required' },
         { status: 400 }
       );
     }
@@ -25,6 +25,7 @@ export async function POST(request: NextRequest) {
         <div style="background-color: #f9f9f9; padding: 20px; margin: 20px 0; border-radius: 5px;">
           <h3 style="margin-top: 0; color: #555;">Contact Information</h3>
           <p><strong>Name:</strong> ${name}</p>
+          <p><strong>Email/Phone:</strong> ${email}</p>
         </div>
 
         <div style="background-color: #fff; padding: 20px; margin: 20px 0; border: 1px solid #ddd; border-radius: 5px;">
